@@ -71,7 +71,7 @@ class PuzzlesTests: XCTestCase {
 
     func testProgramAlarm() {
         let sut = ProgramAlarm()
-        XCTAssertEqual(sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]), [3500,9,10,70,2,3,11,0,99,30,40,50])
+        XCTAssertEqual(try? sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]), [3500,9,10,70,2,3,11,0,99,30,40,50])
     }
 
     func testProgramAlarmSolution() {
@@ -79,5 +79,6 @@ class PuzzlesTests: XCTestCase {
         let scanner = SingleValueScanner(testCaseName: "02-program-alarm", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
         XCTAssertEqual(sut.solve(program: input), 7210630)
+        XCTAssertEqual(sut.solvePartTwo(program: input), 3892)
     }
 }
