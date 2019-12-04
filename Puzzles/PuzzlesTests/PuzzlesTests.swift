@@ -18,8 +18,10 @@ extension Bundle {
 
 class SingleValueScanner {
     let testCaseName: String
-    init(testCaseName: String) {
+    let separator: CharacterSet
+    init(testCaseName: String, separator: CharacterSet = .whitespacesAndNewlines) {
         self.testCaseName = testCaseName
+        self.separator = separator
     }
 
     func parse() -> [Int] {
@@ -30,6 +32,7 @@ class SingleValueScanner {
         }
 
         let scanner = Scanner(string: inputString)
+        scanner.charactersToBeSkipped = separator
         var x = 0
         var result: [Int] = []
         while scanner.scanInt(&x) {
@@ -42,9 +45,8 @@ class SingleValueScanner {
 
 class PuzzlesTests: XCTestCase {
 
-    let sut = TheTiranyOfTheRocketEquation()
-
     func testTheTiranyOfTheRocketEquation() {
+        let sut = TheTiranyOfTheRocketEquation()
         XCTAssertEqual(sut.solve(mass: 12), 2)
         XCTAssertEqual(sut.solve(mass: 14), 2)
         XCTAssertEqual(sut.solve(mass: 1969), 654)
@@ -53,15 +55,29 @@ class PuzzlesTests: XCTestCase {
     }
 
     func testTheTiranyOfTheRocketEquationPartTwo() {
+        let sut = TheTiranyOfTheRocketEquation()
         XCTAssertEqual(sut.solvePartTwo(mass: 14), 2)
         XCTAssertEqual(sut.solvePartTwo(mass: 1969), 966)
         XCTAssertEqual(sut.solvePartTwo(mass: 100756), 50346)
     }
 
     func testTheTiranyOfTheRocketEquationSolution() {
+        let sut = TheTiranyOfTheRocketEquation()
         let scanner = SingleValueScanner(testCaseName: "01-the-tirany-of-the-rocket-equation")
         let input = scanner.parse()
         XCTAssertEqual(sut.solve(mass: input), 3366415)
         XCTAssertEqual(sut.solvePartTwo(mass: input), 5046772)
+    }
+
+    func testProgramAlarm() {
+        let sut = ProgramAlarm()
+        XCTAssertEqual(sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]), [3500,9,10,70,2,3,11,0,99,30,40,50])
+    }
+
+    func testProgramAlarmSolution() {
+        let sut = ProgramAlarm()
+        let scanner = SingleValueScanner(testCaseName: "02-program-alarm", separator: CharacterSet(charactersIn: ","))
+        let input = scanner.parse()
+        XCTAssertEqual(sut.solve(program: input), 7210630)
     }
 }
