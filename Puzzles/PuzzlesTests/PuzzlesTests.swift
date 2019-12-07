@@ -16,32 +16,12 @@ extension Bundle {
     }
 }
 
-class SingleValueScanner {
-    let testCaseName: String
-    let separator: CharacterSet
-    init(testCaseName: String, separator: CharacterSet = .whitespacesAndNewlines) {
-        self.testCaseName = testCaseName
-        self.separator = separator
-    }
-
-    func parse() -> [Int] {
-        guard let inputFile = Bundle.current.url(forResource: testCaseName, withExtension: "txt"),
-            let inputData = try? Data(contentsOf: inputFile),
-            let inputString = String(data: inputData, encoding: .utf8) else {
-            fatalError("Could not read test case")
-        }
-
-        let scanner = Scanner(string: inputString)
-        scanner.charactersToBeSkipped = separator
-        var x = 0
-        var result: [Int] = []
-        while scanner.scanInt(&x) {
-            result.append(x)
-        }
-
-        return result
+extension Array: LosslessStringConvertible where Element: LosslessStringConvertible {
+    public init?(_ description: String) {
+        self = description.trimmingCharacters(in: CharacterSet(charactersIn: "[] ")).split(separator: ",").compactMap { Element(String($0)) }
     }
 }
+
 
 class PuzzlesTests: XCTestCase {
 
@@ -63,7 +43,7 @@ class PuzzlesTests: XCTestCase {
 
     func testTheTiranyOfTheRocketEquationSolution() {
         let sut = TheTiranyOfTheRocketEquation()
-        let scanner = SingleValueScanner(testCaseName: "01-the-tirany-of-the-rocket-equation")
+        let scanner = SingleValueScanner<Int>(testCaseName: "01-the-tirany-of-the-rocket-equation")
         let input = scanner.parse()
         XCTAssertEqual(sut.solve(mass: input), 3366415)
         XCTAssertEqual(sut.solvePartTwo(mass: input), 5046772)
@@ -76,9 +56,26 @@ class PuzzlesTests: XCTestCase {
 
     func testProgramAlarmSolution() {
         let sut = ProgramAlarm()
-        let scanner = SingleValueScanner(testCaseName: "02-program-alarm", separator: CharacterSet(charactersIn: ","))
+        let scanner = SingleValueScanner<Int>(testCaseName: "02-program-alarm", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
         XCTAssertEqual(sut.solve(program: input), 7210630)
         XCTAssertEqual(sut.solvePartTwo(program: input), 3892)
+    }
+
+    func testCrossedWires() {
+        let sut = CrossedWires()
+        XCTAssertEqual(sut.solve(firstWire: [CrossedWires.Path]("R8,U5,L5,D3")!,
+                                 secondWire: [CrossedWires.Path]("U7,R6,D4,L4")!), 6)
+        XCTAssertEqual(sut.solve(firstWire: [CrossedWires.Path]("R75,D30,R83,U83,L12,D49,R71,U7,L72")!,
+                                 secondWire: [CrossedWires.Path]("U62,R66,U55,R34,D71,R55,D58,R83")!), 159)
+        XCTAssertEqual(sut.solve(firstWire: [CrossedWires.Path]("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")!,
+                                 secondWire: [CrossedWires.Path]("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")!), 135)
+    }
+
+    func testCrossedWiresSolution() {
+        let sut = CrossedWires()
+        let scanner = SingleValueScanner<[CrossedWires.Path]>(testCaseName: "03-crossed-wires", separator: CharacterSet(charactersIn: ","))
+        let input = scanner.parse()
+        XCTAssertEqual(sut.solve(firstWire: input[0], secondWire: input[1]), 248)
     }
 }

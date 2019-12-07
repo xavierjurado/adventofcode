@@ -12,6 +12,9 @@
 		4710A16C2397021F008C408B /* Puzzles.h in Headers */ = {isa = PBXBuildFile; fileRef = 4710A15E2397021F008C408B /* Puzzles.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */; };
 		4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */; };
+		4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC2239C1990006406ED /* 03-crossed-wires.swift */; };
+		4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC4239C24B1006406ED /* SingleValueScanner.swift */; };
+		4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4759EDC6239C631A006406ED /* 03-crossed-wires.txt */; };
 		47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47757CD6239833C900C43809 /* 02-program-alarm.swift */; };
 		47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47757CD82398392A00C43809 /* 02-program-alarm.txt */; };
 /* End PBXBuildFile section */
@@ -35,6 +38,9 @@
 		4710A16B2397021F008C408B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-the-tirany-of-the-rocket-equation.swift"; sourceTree = "<group>"; };
 		4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "01-the-tirany-of-the-rocket-equation.txt"; sourceTree = "<group>"; };
+		4759EDC2239C1990006406ED /* 03-crossed-wires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-crossed-wires.swift"; sourceTree = "<group>"; };
+		4759EDC4239C24B1006406ED /* SingleValueScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleValueScanner.swift; sourceTree = "<group>"; };
+		4759EDC6239C631A006406ED /* 03-crossed-wires.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "03-crossed-wires.txt"; sourceTree = "<group>"; };
 		47757CD6239833C900C43809 /* 02-program-alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-program-alarm.swift"; sourceTree = "<group>"; };
 		47757CD82398392A00C43809 /* 02-program-alarm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "02-program-alarm.txt"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -83,6 +89,7 @@
 				4710A15F2397021F008C408B /* Info.plist */,
 				4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */,
 				47757CD6239833C900C43809 /* 02-program-alarm.swift */,
+				4759EDC2239C1990006406ED /* 03-crossed-wires.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -91,8 +98,10 @@
 			isa = PBXGroup;
 			children = (
 				4710A1692397021F008C408B /* PuzzlesTests.swift */,
+				4759EDC4239C24B1006406ED /* SingleValueScanner.swift */,
 				4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */,
 				47757CD82398392A00C43809 /* 02-program-alarm.txt */,
+				4759EDC6239C631A006406ED /* 03-crossed-wires.txt */,
 				4710A16B2397021F008C408B /* Info.plist */,
 			);
 			path = PuzzlesTests;
@@ -200,6 +209,7 @@
 			files = (
 				4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
+				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,6 +220,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */,
 				47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */,
 				4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */,
 			);
@@ -219,6 +230,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */,
 				4710A16A2397021F008C408B /* PuzzlesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
