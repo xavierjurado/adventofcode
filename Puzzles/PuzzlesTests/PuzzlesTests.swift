@@ -70,6 +70,13 @@ class PuzzlesTests: XCTestCase {
                                  secondWire: [CrossedWires.Path]("U62,R66,U55,R34,D71,R55,D58,R83")!), 159)
         XCTAssertEqual(sut.solve(firstWire: [CrossedWires.Path]("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")!,
                                  secondWire: [CrossedWires.Path]("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")!), 135)
+
+        XCTAssertEqual(sut.solvePartTwo(firstWire: [CrossedWires.Path]("R8,U5,L5,D3")!,
+                                        secondWire: [CrossedWires.Path]("U7,R6,D4,L4")!), 30)
+        XCTAssertEqual(sut.solvePartTwo(firstWire: [CrossedWires.Path]("R75,D30,R83,U83,L12,D49,R71,U7,L72")!,
+                                        secondWire: [CrossedWires.Path]("U62,R66,U55,R34,D71,R55,D58,R83")!), 610)
+        XCTAssertEqual(sut.solvePartTwo(firstWire: [CrossedWires.Path]("R98,U47,R26,D63,R33,U87,L62,D20,R33,U53,R51")!,
+                                        secondWire: [CrossedWires.Path]("U98,R91,D20,R16,D67,R40,U7,R15,U6,R7")!), 410)
     }
 
     func testCrossedWiresSolution() {
@@ -77,5 +84,6 @@ class PuzzlesTests: XCTestCase {
         let scanner = SingleValueScanner<[CrossedWires.Path]>(testCaseName: "03-crossed-wires", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
         XCTAssertEqual(sut.solve(firstWire: input[0], secondWire: input[1]), 248)
+        XCTAssertEqual(sut.solvePartTwo(firstWire: input[0], secondWire: input[1]), 28580)
     }
 }
