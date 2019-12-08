@@ -5,6 +5,8 @@ class Intcode {
     enum Opcode: Int, RawRepresentable {
         case add = 1
         case multiply = 2
+        case read = 3
+        case write = 4
         case halt = 99
 
         var numberOfParameters: Int {
@@ -13,6 +15,10 @@ class Intcode {
                 return 3
             case .halt:
                 return 0
+            case .read:
+                return 1
+            case .write:
+                return 1
             }
         }
     }
@@ -83,7 +89,35 @@ class Intcode {
             program[resultIndex] = left * right
         case .halt:
             break
+        case .read:
+            let address = p[0]
+            guard let input = readLine(), let value = Int(input) else { fatalError() }
+            program[address] = value
+        case .write:
+            let address = p[0]
+            let value = program[address]
+            print(value)
         }
     }
 
 }
+
+//protocol IntcodeInstruction {
+//    func execute(memory: inout[Int])
+//}
+//
+//struct AddInstruction {
+//    let parameters: [Int]
+//    func execute(memory: inout[Int]) {
+//        let leftIndex = parameters[0]
+//        let rightIndex = parameters[1]
+//        let resultIndex = parameters[2]
+//        let left = memory[leftIndex]
+//        let right = memory[rightIndex]
+//        memory[resultIndex] = left + right
+//    }
+//}
+//
+//struct ReadInputInstruction {
+//
+//}
