@@ -86,4 +86,28 @@ class PuzzlesTests: XCTestCase {
         XCTAssertEqual(sut.solve(firstWire: input[0], secondWire: input[1]), 248)
         XCTAssertEqual(sut.solvePartTwo(firstWire: input[0], secondWire: input[1]), 28580)
     }
+
+    func testSecureContainer() {
+        let sut = SecureContainer()
+        XCTAssertTrue(sut.meetsCriteria(122345))
+        XCTAssertFalse(sut.meetsCriteria(123456))
+        XCTAssertTrue(sut.meetsCriteria(111111))
+        XCTAssertFalse(sut.meetsCriteria(223450))
+
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(112233))
+        XCTAssertFalse(sut.hasTwoAdgacentDigitsPartTwo(123444))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(111122))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(172233))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(172233))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(231331))
+        XCTAssertFalse(sut.hasTwoAdgacentDigitsPartTwo(111111))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(111211))
+        XCTAssertTrue(sut.hasTwoAdgacentDigitsPartTwo(112345))
+    }
+
+    func testSecureContainerSolution() {
+        let sut = SecureContainer()
+        XCTAssertEqual(sut.solve(), 931)
+        XCTAssertEqual(sut.solvePartTwo(), 609)
+    }
 }
