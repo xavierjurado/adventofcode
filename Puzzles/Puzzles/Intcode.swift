@@ -37,6 +37,11 @@ class Intcode {
         case outOfBounds
     }
 
+    enum ParameterMode: Int, RawRepresentable {
+        case position = 0
+        case immediate = 1
+    }
+
     func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
         var program = program
         program[1] = noun
@@ -48,20 +53,10 @@ class Intcode {
         var program = program
         var i = 0
         while i < program.count {
-            guard let opcode = Opcode(rawValue: program[i]) else {
-                throw ProgramError.unknownOpcode
-            }
+            let instruction = try decodeInstruction(memory: program, pc: i)
+            try  executeInstruction(instruction, memory: &program)
 
-            let n = opcode.numberOfParameters
-            guard i + n < program.count else {
-                throw ProgramError.outOfBounds
-            }
-
-            let p = program[(i + 1)..<(i + 1 + n)]
-            let instruction = Instruction(opcode: opcode, parameters: Array(p))
-            mutate(program: &program, instruction: instruction)
-
-            if opcode == .halt {
+            if instruction.opcode == .halt {
                 break
             }
 
@@ -70,54 +65,65 @@ class Intcode {
         return program
     }
 
-    private func mutate(program: inout [Int], instruction: Instruction) {
+    func decodeInstruction(memory: [Int], pc: Int) throws -> Instruction {
+        let rawOpcode = memory[pc]
+        let intOpcode = rawOpcode % 100
+        guard let opcode = Opcode(rawValue: intOpcode) else {
+            throw ProgramError.unknownOpcode
+        }
+        var rawOptions = rawOpcode / 100
+        var options = Array(repeating: ParameterMode.position, count: opcode.numberOfParameters)
+        var i = 0
+        while rawOptions > 0 {
+            let rawParameterMode = rawOptions % 10
+            guard let parameterMode = ParameterMode(rawValue: rawParameterMode) else {
+                throw ProgramError.unknownOpcode
+            }
+            options[i] = parameterMode
+            rawOptions = rawOptions / 10
+            i += 1
+        }
+
+        guard i + opcode.numberOfParameters < memory.count else {
+            throw ProgramError.outOfBounds
+        }
+
+        let rawParameters = memory[(pc + 1)..<(pc + 1 + opcode.numberOfParameters)]
+        let parameters = zip(rawParameters, options).map { value, mode -> Int in
+            switch mode {
+            case .position:
+                return memory[value]
+            case .immediate:
+                return value
+            }
+        }
+
+        return Instruction(opcode: opcode, parameters: parameters)
+    }
+
+    func executeInstruction(_ instruction: Instruction, memory: inout [Int]) throws {
         let p = instruction.parameters
         switch instruction.opcode {
         case .add:
-            let leftIndex = p[0]
-            let rightIndex = p[1]
-            let resultIndex = p[2]
-            let left = program[leftIndex]
-            let right = program[rightIndex]
-            program[resultIndex] = left + right
+            let left = p[0]
+            let right = p[1]
+            let resultAddress = p[2]
+            memory[resultAddress] = left + right
         case .multiply:
-            let leftIndex = p[0]
-            let rightIndex = p[1]
-            let resultIndex = p[2]
-            let left = program[leftIndex]
-            let right = program[rightIndex]
-            program[resultIndex] = left * right
+            let left = p[0]
+            let right = p[1]
+            let resultAddress = p[2]
+            memory[resultAddress] = left * right
         case .halt:
             break
         case .read:
             let address = p[0]
             guard let input = readLine(), let value = Int(input) else { fatalError() }
-            program[address] = value
+            memory[address] = value
         case .write:
-            let address = p[0]
-            let value = program[address]
+            let value = p[0]
             print(value)
         }
     }
 
 }
-
-//protocol IntcodeInstruction {
-//    func execute(memory: inout[Int])
-//}
-//
-//struct AddInstruction {
-//    let parameters: [Int]
-//    func execute(memory: inout[Int]) {
-//        let leftIndex = parameters[0]
-//        let rightIndex = parameters[1]
-//        let resultIndex = parameters[2]
-//        let left = memory[leftIndex]
-//        let right = memory[rightIndex]
-//        memory[resultIndex] = left + right
-//    }
-//}
-//
-//struct ReadInputInstruction {
-//
-//}
