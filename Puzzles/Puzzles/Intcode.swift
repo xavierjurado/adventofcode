@@ -26,6 +26,7 @@ class Intcode {
     struct Instruction {
         let opcode: Opcode
         let parameters: [Int]
+        let rawParameters: [Int]
 
         var length: Int {
             return 1 + opcode.numberOfParameters
@@ -84,7 +85,7 @@ class Intcode {
             i += 1
         }
 
-        guard i + opcode.numberOfParameters < memory.count else {
+        guard pc + opcode.numberOfParameters < memory.count else {
             throw ProgramError.outOfBounds
         }
 
@@ -98,26 +99,27 @@ class Intcode {
             }
         }
 
-        return Instruction(opcode: opcode, parameters: parameters)
+        return Instruction(opcode: opcode, parameters: parameters, rawParameters: Array(rawParameters))
     }
 
-    func executeInstruction(_ instruction: Instruction, memory: inout [Int]) throws {
+    private func executeInstruction(_ instruction: Instruction, memory: inout [Int]) throws {
         let p = instruction.parameters
         switch instruction.opcode {
         case .add:
             let left = p[0]
             let right = p[1]
-            let resultAddress = p[2]
+            let resultAddress = instruction.rawParameters[2]
             memory[resultAddress] = left + right
         case .multiply:
             let left = p[0]
             let right = p[1]
-            let resultAddress = p[2]
+            let resultAddress = instruction.rawParameters[2]
             memory[resultAddress] = left * right
         case .halt:
             break
         case .read:
-            let address = p[0]
+            let address = instruction.rawParameters[0]
+            print("Please provide an input value: ")
             guard let input = readLine(), let value = Int(input) else { fatalError() }
             memory[address] = value
         case .write:
@@ -125,5 +127,4 @@ class Intcode {
             print(value)
         }
     }
-
 }
