@@ -141,6 +141,14 @@ class PuzzlesTests: XCTestCase {
         let sut = Intcode()
         XCTAssertEqual(try? sut.execute(program: [1002,4,3,4,33]), [1002,4,3,4,99])
         XCTAssertEqual(try? sut.execute(program: [1101,100,-1,4,0]), [1101,100,-1,4,99])
+
+        let programInput = TestInput(values: ["1"])
+        let programOutput = TestOutput()
+        let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
+        1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
+        999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
+        _ = try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        XCTAssertEqual(programOutput.values.last, 999)
     }
 
     func testSunnyWithAChanceOfAsteroidsSolution() {
