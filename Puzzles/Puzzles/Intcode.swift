@@ -55,9 +55,14 @@ class Intcode {
         case immediate = 1
     }
 
+    typealias Input = () -> String
+    typealias Output = (Int) -> Void
+
     /// State
     private var pc = 0
     private var memory: [Int] = []
+    private var programInput: Input?
+    private var programOutput: Output?
 
     func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
         var program = program
@@ -66,9 +71,11 @@ class Intcode {
         return program
     }
 
-    func execute(program: [Int]) throws -> [Int] {
+    func execute(program: [Int], input: @escaping Input = Intcode.standardInput, output: @escaping Output = Intcode.standardOutput) throws -> [Int] {
         memory = program
         pc = 0
+        programInput = input
+        programOutput = output
 
         while pc < memory.count {
             let instruction = try decodeInstruction()
@@ -133,11 +140,12 @@ class Intcode {
         case .read:
             let address = instruction.rawParameters[0]
             print("Please provide an input value: ")
-            guard let input = readLine(), let value = Int(input) else { fatalError() }
+            let input = programInput!()
+            guard let value = Int(input) else { fatalError() }
             memory[address] = value
         case .write:
             let value = p[0]
-            print(value)
+            programOutput?(value)
         case .jumpIfTrue:
             let p1 = p[0]
             let p2 = instruction.rawParameters[1]
@@ -166,6 +174,21 @@ class Intcode {
             pc = jumpPC
         } else {
             pc += instruction.length
+        }
+    }
+}
+
+extension Intcode {
+
+    static var standardInput: Input {
+        return {
+            readLine()!
+        }
+    }
+
+    static var standardOutput: Output {
+        return { value in
+            print(value)
         }
     }
 }

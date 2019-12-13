@@ -22,6 +22,32 @@ extension Array: LosslessStringConvertible where Element: LosslessStringConverti
     }
 }
 
+class TestInput {
+    var input: Intcode.Input {
+        read
+    }
+    private var values: [String]
+
+    init(values: [String]) {
+        self.values = values
+    }
+
+    private func read() -> String {
+        values.removeFirst()
+    }
+}
+
+class TestOutput {
+    var output: Intcode.Output {
+        write
+    }
+    var values: [Int] = []
+
+    private func write(value: Int) {
+        values.append(value)
+    }
+}
+
 
 class PuzzlesTests: XCTestCase {
 
@@ -121,8 +147,10 @@ class PuzzlesTests: XCTestCase {
         let sut = Intcode()
         let scanner = SingleValueScanner<Int>(testCaseName: "05-sunny-with-a-chance-of-asteroids", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
-        _ = try? sut.execute(program: input)
-
+        let programInput = TestInput(values: ["1"])
+        let programOutput = TestOutput()
+        _ = try? sut.execute(program: input, input: programInput.input, output: programOutput.output)
+        XCTAssertEqual(programOutput.values.last, 5821753)
     }
 
 }
