@@ -115,10 +115,14 @@ class PuzzlesTests: XCTestCase {
         let sut = Intcode()
         XCTAssertEqual(try? sut.execute(program: [1002,4,3,4,33]), [1002,4,3,4,99])
         XCTAssertEqual(try? sut.execute(program: [1101,100,-1,4,0]), [1101,100,-1,4,99])
+    }
 
+    func testSunnyWithAChanceOfAsteroidsSolution() {
+        let sut = Intcode()
         let scanner = SingleValueScanner<Int>(testCaseName: "05-sunny-with-a-chance-of-asteroids", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
         _ = try? sut.execute(program: input)
+
     }
 
 }

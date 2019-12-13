@@ -7,6 +7,10 @@ class Intcode {
         case multiply = 2
         case read = 3
         case write = 4
+        case jumpIfTrue = 5
+        case jumpIfFalse = 6
+        case lessThan = 7
+        case equals = 8
         case halt = 99
 
         var numberOfParameters: Int {
@@ -19,6 +23,14 @@ class Intcode {
                 return 1
             case .write:
                 return 1
+            case .jumpIfTrue:
+                return 2
+            case .jumpIfFalse:
+                return 2
+            case .lessThan:
+                return 3
+            case .equals:
+                return 3
             }
         }
     }
@@ -43,6 +55,10 @@ class Intcode {
         case immediate = 1
     }
 
+    /// State
+    private var pc = 0
+    private var memory: [Int] = []
+
     func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
         var program = program
         program[1] = noun
@@ -51,22 +67,18 @@ class Intcode {
     }
 
     func execute(program: [Int]) throws -> [Int] {
-        var program = program
-        var i = 0
-        while i < program.count {
-            let instruction = try decodeInstruction(memory: program, pc: i)
-            try  executeInstruction(instruction, memory: &program)
+        memory = program
+        pc = 0
 
-            if instruction.opcode == .halt {
-                break
-            }
-
-            i += instruction.length
+        while pc < memory.count {
+            let instruction = try decodeInstruction()
+            try  executeInstruction(instruction)
         }
-        return program
+
+        return memory
     }
 
-    func decodeInstruction(memory: [Int], pc: Int) throws -> Instruction {
+    private func decodeInstruction() throws -> Instruction {
         let rawOpcode = memory[pc]
         let intOpcode = rawOpcode % 100
         guard let opcode = Opcode(rawValue: intOpcode) else {
@@ -102,7 +114,8 @@ class Intcode {
         return Instruction(opcode: opcode, parameters: parameters, rawParameters: Array(rawParameters))
     }
 
-    private func executeInstruction(_ instruction: Instruction, memory: inout [Int]) throws {
+    private func executeInstruction(_ instruction: Instruction) throws {
+        var jumpPC: Int?
         let p = instruction.parameters
         switch instruction.opcode {
         case .add:
@@ -116,7 +129,7 @@ class Intcode {
             let resultAddress = instruction.rawParameters[2]
             memory[resultAddress] = left * right
         case .halt:
-            break
+            jumpPC = memory.count // effectively breaks the execution loop
         case .read:
             let address = instruction.rawParameters[0]
             print("Please provide an input value: ")
@@ -125,6 +138,34 @@ class Intcode {
         case .write:
             let value = p[0]
             print(value)
+        case .jumpIfTrue:
+            let p1 = p[0]
+            let p2 = instruction.rawParameters[1]
+            if p1 != 0 {
+                jumpPC = p2
+            }
+        case .jumpIfFalse:
+            let p1 = p[0]
+            let p2 = instruction.rawParameters[1]
+            if p1 == 0 {
+                jumpPC = p2
+            }
+        case .lessThan:
+            let p1 = p[0]
+            let p2 = p[1]
+            let address = instruction.rawParameters[2]
+            memory[address] = p1 < p2 ? 1 : 0
+        case .equals:
+            let p1 = p[0]
+            let p2 = p[1]
+            let address = instruction.rawParameters[2]
+            memory[address] = p1 == p2 ? 1 : 0
+        }
+
+        if let jumpPC = jumpPC {
+            pc = jumpPC
+        } else {
+            pc += instruction.length
         }
     }
 }
