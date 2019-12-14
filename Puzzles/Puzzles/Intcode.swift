@@ -148,13 +148,13 @@ class Intcode {
             programOutput?(value)
         case .jumpIfTrue:
             let p1 = p[0]
-            let p2 = instruction.rawParameters[1]
+            let p2 = p[1]
             if p1 != 0 {
                 jumpPC = p2
             }
         case .jumpIfFalse:
             let p1 = p[0]
-            let p2 = instruction.rawParameters[1]
+            let p2 = p[1]
             if p1 == 0 {
                 jumpPC = p2
             }
