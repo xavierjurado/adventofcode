@@ -187,4 +187,11 @@ class PuzzlesTests: XCTestCase {
         let input = scanner.parse()
         XCTAssertEqual(sut.solvePartOne(map: input), 308790)
     }
+
+    func testUniversalOrbitMapPartTwo() {
+        let sut = UniversalOrbitMap()
+        let scanner = SingleValueScanner<UniversalOrbitMap.OrbitalRelationship>(testCaseName: "06")
+        let input = scanner.parse()
+        XCTAssertEqual(sut.solvePartTwo(map: input), 472)
+    }
 }
