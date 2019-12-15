@@ -178,4 +178,13 @@ class PuzzlesTests: XCTestCase {
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
 
+    func testUniversalOrbitMapPartOne() {
+        let sut = UniversalOrbitMap()
+        let map = [UniversalOrbitMap.OrbitalRelationship]("COM)B,B)C,C)D,D)E,E)F,B)G,G)H,D)I,E)J,J)K,K)L")!
+        XCTAssertEqual(sut.solvePartOne(map: map), 42)
+
+        let scanner = SingleValueScanner<UniversalOrbitMap.OrbitalRelationship>(testCaseName: "06")
+        let input = scanner.parse()
+        XCTAssertEqual(sut.solvePartOne(map: input), 308790)
+    }
 }

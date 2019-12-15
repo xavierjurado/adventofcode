@@ -13,6 +13,8 @@
 		4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */; };
 		4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */; };
 		474A59AD239D67F40039635C /* Intcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A59AC239D67F40039635C /* Intcode.swift */; };
+		4750144623A6AC7A00512E66 /* 06-universal-orbit-map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4750144523A6AC7A00512E66 /* 06-universal-orbit-map.swift */; };
+		4750144823A6C09C00512E66 /* 06.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4750144723A6C09C00512E66 /* 06.txt */; };
 		4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC2239C1990006406ED /* 03-crossed-wires.swift */; };
 		4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC4239C24B1006406ED /* SingleValueScanner.swift */; };
 		4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4759EDC6239C631A006406ED /* 03-crossed-wires.txt */; };
@@ -42,6 +44,8 @@
 		4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-the-tirany-of-the-rocket-equation.swift"; sourceTree = "<group>"; };
 		4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "01-the-tirany-of-the-rocket-equation.txt"; sourceTree = "<group>"; };
 		474A59AC239D67F40039635C /* Intcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intcode.swift; sourceTree = "<group>"; };
+		4750144523A6AC7A00512E66 /* 06-universal-orbit-map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-universal-orbit-map.swift"; sourceTree = "<group>"; };
+		4750144723A6C09C00512E66 /* 06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 06.txt; sourceTree = "<group>"; };
 		4759EDC2239C1990006406ED /* 03-crossed-wires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-crossed-wires.swift"; sourceTree = "<group>"; };
 		4759EDC4239C24B1006406ED /* SingleValueScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleValueScanner.swift; sourceTree = "<group>"; };
 		4759EDC6239C631A006406ED /* 03-crossed-wires.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "03-crossed-wires.txt"; sourceTree = "<group>"; };
@@ -98,6 +102,7 @@
 				47757CD6239833C900C43809 /* 02-program-alarm.swift */,
 				4759EDC2239C1990006406ED /* 03-crossed-wires.swift */,
 				4759EDC8239C7B9D006406ED /* 04-secure-container.swift */,
+				4750144523A6AC7A00512E66 /* 06-universal-orbit-map.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -111,6 +116,7 @@
 				47757CD82398392A00C43809 /* 02-program-alarm.txt */,
 				4759EDC6239C631A006406ED /* 03-crossed-wires.txt */,
 				477B013C23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt */,
+				4750144723A6C09C00512E66 /* 06.txt */,
 				4710A16B2397021F008C408B /* Info.plist */,
 			);
 			path = PuzzlesTests;
@@ -216,6 +222,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4750144823A6C09C00512E66 /* 06.txt in Resources */,
 				4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
 				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
@@ -235,6 +242,7 @@
 				4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */,
 				47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */,
 				4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */,
+				4750144623A6AC7A00512E66 /* 06-universal-orbit-map.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

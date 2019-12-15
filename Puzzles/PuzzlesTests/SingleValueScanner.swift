@@ -75,6 +75,31 @@ extension CrossedWires.Path: Scannable {
     }
 }
 
+extension UniversalOrbitMap.OrbitalRelationship: LosslessStringConvertible {
+    public init?(_ description: String) {
+        let split = description.split(separator: ")")
+        let center = String(split[0])
+        let object = String(split[1])
+        self.init(object: object, center: center)
+    }
+
+    public var description: String {
+        return "\(center))\(object)"
+    }
+}
+
+extension UniversalOrbitMap.OrbitalRelationship: Scannable {
+    static func parse(scanner: Scanner) -> UniversalOrbitMap.OrbitalRelationship? {
+        var c: NSString?
+        let cs = CharacterSet.alphanumerics.union(CharacterSet(charactersIn: ")"))
+        if scanner.scanCharacters(from: cs, into: &c) {
+            return UniversalOrbitMap.OrbitalRelationship(c! as String)
+        } else {
+            return nil
+        }
+    }
+}
+
 class SingleValueScanner<T: Scannable> {
 
     let testCaseName: String
