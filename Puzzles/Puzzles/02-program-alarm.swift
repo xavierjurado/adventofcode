@@ -7,11 +7,9 @@ class ProgramAlarm {
 
     func solve(program: [Int]) -> Int {
         let program = computer.setup(program: program, noun: 12, verb: 2)
-        guard let memory = try? computer.execute(program: program) else {
-            fatalError()
-        }
+        try! computer.execute(program: program)
 
-        return memory[0]
+        return computer.memory[0]
     }
 
 }
@@ -23,8 +21,12 @@ extension ProgramAlarm {
         for noun in 0...99 {
             for verb in 0...99 {
                 let program = computer.setup(program: program, noun: noun, verb: verb)
-                guard let memory = try? computer.execute(program: program) else { continue }
-                if memory[0] == expectedOutput {
+                do {
+                    try computer.execute(program: program)
+                } catch {
+                    continue
+                }
+                if computer.memory[0] == expectedOutput {
                     return 100 * noun + verb
                 }
             }

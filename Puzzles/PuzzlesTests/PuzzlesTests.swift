@@ -77,7 +77,8 @@ class PuzzlesTests: XCTestCase {
 
     func testProgramAlarm() {
         let sut = Intcode()
-        XCTAssertEqual(try? sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]), [3500,9,10,70,2,3,11,0,99,30,40,50])
+        XCTAssertNoThrow(try sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]))
+        XCTAssertEqual(sut.memory, [3500,9,10,70,2,3,11,0,99,30,40,50])
     }
 
     func testProgramAlarmSolution() {
@@ -139,28 +140,30 @@ class PuzzlesTests: XCTestCase {
 
     func testSunnyWithAChanceOfAsteroids() {
         let sut = Intcode()
-        XCTAssertEqual(try? sut.execute(program: [1002,4,3,4,33]), [1002,4,3,4,99])
-        XCTAssertEqual(try? sut.execute(program: [1101,100,-1,4,0]), [1101,100,-1,4,99])
+        XCTAssertNoThrow(try sut.execute(program: [1002,4,3,4,33]))
+        XCTAssertEqual(sut.memory, [1002,4,3,4,99])
+        XCTAssertNoThrow(try sut.execute(program: [1101,100,-1,4,0]))
+        XCTAssertEqual(sut.memory, [1101,100,-1,4,99])
 
         let programInput = TestInput(values: ["7"])
         let programOutput = TestOutput()
         let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
         1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
         999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
-        _ = try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 999)
 
         programInput.values = ["8"]
-        _ = try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 1000)
 
         programInput.values = ["9"]
-        _ = try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 1001)
 
         let program2 = [3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9]
         programInput.values = ["0"]
-        _ = try? sut.execute(program: program2, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program2, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 0)
     }
 
@@ -170,11 +173,11 @@ class PuzzlesTests: XCTestCase {
         let input = scanner.parse()
         let programInput = TestInput(values: ["1"])
         let programOutput = TestOutput()
-        _ = try? sut.execute(program: input, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: input, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 5821753)
 
         let partTwoProgramInput = TestInput(values: ["5"])
-        _ = try? sut.execute(program: input, input: partTwoProgramInput.input, output: programOutput.output)
+        try? sut.execute(program: input, input: partTwoProgramInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
 
@@ -193,5 +196,10 @@ class PuzzlesTests: XCTestCase {
         let scanner = SingleValueScanner<UniversalOrbitMap.OrbitalRelationship>(testCaseName: "06")
         let input = scanner.parse()
         XCTAssertEqual(sut.solvePartTwo(map: input), 472)
+    }
+
+    func testAmplificationCircuit() {
+        let computers = Array(repeating: Intcode(), count: 5)
+        let phaseValues = [0, 1, 2, 3, 4]
     }
 }

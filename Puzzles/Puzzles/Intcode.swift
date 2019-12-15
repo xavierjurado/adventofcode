@@ -60,7 +60,7 @@ class Intcode {
 
     /// State
     private var pc = 0
-    private var memory: [Int] = []
+    private(set) var memory: [Int] = []
     private var programInput: Input?
     private var programOutput: Output?
 
@@ -71,7 +71,7 @@ class Intcode {
         return program
     }
 
-    func execute(program: [Int], input: @escaping Input = Intcode.standardInput, output: @escaping Output = Intcode.standardOutput) throws -> [Int] {
+    func execute(program: [Int], input: @escaping Input = Intcode.standardInput, output: @escaping Output = Intcode.standardOutput) throws {
         memory = program
         pc = 0
         programInput = input
@@ -81,8 +81,6 @@ class Intcode {
             let instruction = try decodeInstruction()
             try  executeInstruction(instruction)
         }
-
-        return memory
     }
 
     private func decodeInstruction() throws -> Instruction {
