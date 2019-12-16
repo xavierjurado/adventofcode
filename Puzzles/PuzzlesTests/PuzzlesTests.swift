@@ -26,14 +26,14 @@ class TestInput {
     var input: Intcode.Input {
         read
     }
-    var values: [String]
+    var values: [Int]
 
-    init(values: [String]) {
+    init(values: [Int]) {
         self.values = values
     }
 
     private func read() -> String {
-        values.removeFirst()
+        "\(values.removeFirst())"
     }
 }
 
@@ -145,7 +145,7 @@ class PuzzlesTests: XCTestCase {
         XCTAssertNoThrow(try sut.execute(program: [1101,100,-1,4,0]))
         XCTAssertEqual(sut.memory, [1101,100,-1,4,99])
 
-        let programInput = TestInput(values: ["7"])
+        let programInput = TestInput(values: [7])
         let programOutput = TestOutput()
         let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
         1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
@@ -153,16 +153,16 @@ class PuzzlesTests: XCTestCase {
         try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 999)
 
-        programInput.values = ["8"]
+        programInput.values = [8]
         try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 1000)
 
-        programInput.values = ["9"]
+        programInput.values = [9]
         try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 1001)
 
         let program2 = [3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9]
-        programInput.values = ["0"]
+        programInput.values = [0]
         try? sut.execute(program: program2, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 0)
     }
@@ -171,12 +171,12 @@ class PuzzlesTests: XCTestCase {
         let sut = Intcode()
         let scanner = SingleValueScanner<Int>(testCaseName: "05-sunny-with-a-chance-of-asteroids", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
-        let programInput = TestInput(values: ["1"])
+        let programInput = TestInput(values: [1])
         let programOutput = TestOutput()
         try? sut.execute(program: input, input: programInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 5821753)
 
-        let partTwoProgramInput = TestInput(values: ["5"])
+        let partTwoProgramInput = TestInput(values: [5])
         try? sut.execute(program: input, input: partTwoProgramInput.input, output: programOutput.output)
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
@@ -200,6 +200,53 @@ class PuzzlesTests: XCTestCase {
 
     func testAmplificationCircuit() {
         let computers = Array(repeating: Intcode(), count: 5)
-        let phaseValues = [0, 1, 2, 3, 4]
+        let phasePermutations = [0, 1, 2, 3, 4].allPermutations()
+        let scanner = SingleValueScanner<Int>(testCaseName: "07", separator: CharacterSet(charactersIn: ","))
+        let program = scanner.parse()
+        var bestPermutation: [Int] = []
+        var bestPermutationOutput = 0
+
+
+        for phaseValues in phasePermutations {
+            var output: [Int] = Array(repeating: 0, count: 6)
+            var i = 0
+            while i < 5 {
+                let orig = computers[i]
+                let phase = phaseValues[i]
+                let input = output[i]
+                let testInput = TestInput(values: [phase, input])
+                let testOutput = TestOutput()
+                try? orig.execute(program: program, input: testInput.input, output: testOutput.output)
+                output[i + 1] = testOutput.values[0]
+                i += 1
+            }
+
+            if output.last! > bestPermutationOutput {
+                bestPermutationOutput = output.last!
+                bestPermutation = phaseValues
+            }
+        }
+
+        print(bestPermutationOutput)
+        print(bestPermutation)
+
+        XCTAssertEqual(bestPermutationOutput, 117312)
+    }
+}
+
+extension Array {
+    func allPermutations() -> Array<Array> {
+        guard count > 1 else { return [self] }
+        var result: Array<Array> = []
+        for i in startIndex..<endIndex {
+            let value = self[i]
+            var a = self
+            a.remove(at: i)
+            for p in a.allPermutations() {
+                result.append([value] + p)
+            }
+        }
+
+        return result
     }
 }
