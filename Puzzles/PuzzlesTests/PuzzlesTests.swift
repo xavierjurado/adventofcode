@@ -22,28 +22,23 @@ extension Array: LosslessStringConvertible where Element: LosslessStringConverti
     }
 }
 
-class TestInput {
-    var input: Intcode.Input {
-        read
-    }
-    var values: [Int]
+class TestInput: InputBuffer {
+    var values: [Int] = []
 
     init(values: [Int]) {
         self.values = values
     }
 
-    private func read() -> String {
-        "\(values.removeFirst())"
+    func read() -> Int? {
+        values.removeFirst()
     }
 }
 
-class TestOutput {
-    var output: Intcode.Output {
-        write
-    }
+class TestOutput: OutputBuffer {
+
     var values: [Int] = []
 
-    private func write(value: Int) {
+    func write(value: Int) {
         values.append(value)
     }
 }
@@ -150,8 +145,8 @@ class PuzzlesTests: XCTestCase {
         let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
         1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
         999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
-        sut.programInput = programInput.input
-        sut.programOutput = programOutput.output
+        sut.input = programInput
+        sut.output = programOutput
 
         try? sut.execute(program: program)
         XCTAssertEqual(programOutput.values.last, 999)
@@ -176,14 +171,14 @@ class PuzzlesTests: XCTestCase {
         let input = scanner.parse()
         let programInput = TestInput(values: [1])
         let programOutput = TestOutput()
-        sut.programInput = programInput.input
-        sut.programOutput = programOutput.output
+        sut.input = programInput
+        sut.output = programOutput
 
         try? sut.execute(program: input)
         XCTAssertEqual(programOutput.values.last, 5821753)
 
         let partTwoProgramInput = TestInput(values: [5])
-        sut.programInput = partTwoProgramInput.input
+        sut.input = partTwoProgramInput
         try? sut.execute(program: input)
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
@@ -206,38 +201,34 @@ class PuzzlesTests: XCTestCase {
     }
 
     func testAmplificationCircuit() {
-        let computers = Array(repeating: Intcode(), count: 5)
+        let computers = (1...5).map { _ in Intcode() }
         let phasePermutations = [0, 1, 2, 3, 4].allPermutations()
         let scanner = SingleValueScanner<Int>(testCaseName: "07", separator: CharacterSet(charactersIn: ","))
         let program = scanner.parse()
-        var bestPermutation: [Int] = []
         var bestPermutationOutput = 0
 
 
         for phaseValues in phasePermutations {
-            var output: [Int] = Array(repeating: 0, count: 6)
-            var i = 0
-            while i < 5 {
-                let orig = computers[i]
-                let phase = phaseValues[i]
-                let input = output[i]
-                let testInput = TestInput(values: [phase, input])
-                let testOutput = TestOutput()
-                orig.programInput = testInput.input
-                orig.programOutput = testOutput.output
-                try? orig.execute(program: program)
-                output[i + 1] = testOutput.values[0]
-                i += 1
+            let systemOutput = TestOutput()
+            computers[0].input = TestInput(values: [phaseValues[0], 0])
+
+            for i in 0..<4 {
+                let c1 = computers[i]
+                let c2 = computers[i + 1]
+                let phase = phaseValues[i + 1]
+                c1.pipeOutput(to: c2)
+                c1.output.write(value: phase)
+                try? c1.execute(program: program)
             }
 
-            if output.last! > bestPermutationOutput {
-                bestPermutationOutput = output.last!
-                bestPermutation = phaseValues
+            computers.last?.output = systemOutput
+            try? computers.last?.execute(program: program)
+
+            if systemOutput.values[0] > bestPermutationOutput {
+                bestPermutationOutput = systemOutput.values[0]
             }
+
         }
-
-        print(bestPermutationOutput)
-        print(bestPermutation)
 
         XCTAssertEqual(bestPermutationOutput, 117312)
     }

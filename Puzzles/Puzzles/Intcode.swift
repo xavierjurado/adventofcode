@@ -55,16 +55,20 @@ class Intcode {
         case immediate = 1
     }
 
-    typealias Input = () -> String
-    typealias Output = (Int) -> Void
-
     /// State
     private var pc = 0
     private(set) var memory: [Int] = []
 
     /// IO
-   var programInput: Input = Intcode.standardInput
-   var programOutput: Output = Intcode.standardOutput
+    var input: InputBuffer = StdIn()
+    var output: OutputBuffer = StdOut()
+    private(set) var awaitingInput = false
+
+    func pipeOutput(to: Intcode) {
+        let pipe = Pipe()
+        output = pipe
+        to.input = pipe
+    }
 
     func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
         var program = program
@@ -138,12 +142,11 @@ class Intcode {
         case .read:
             let address = instruction.rawParameters[0]
             print("Please provide an input value: ")
-            let input = programInput()
-            guard let value = Int(input) else { fatalError() }
+            guard let value = input.read() else { fatalError() }
             memory[address] = value
         case .write:
             let value = p[0]
-            programOutput(value)
+            output.write(value: value)
         case .jumpIfTrue:
             let p1 = p[0]
             let p2 = p[1]
@@ -176,17 +179,34 @@ class Intcode {
     }
 }
 
-extension Intcode {
+protocol InputBuffer {
+    func read() -> Int?
+}
 
-    static var standardInput: Input {
-        return {
-            readLine()!
-        }
+protocol OutputBuffer: class {
+    func write(value: Int)
+}
+
+class StdIn: InputBuffer {
+    func read() -> Int? {
+        Int(readLine()!)!
+    }
+}
+
+class StdOut: OutputBuffer {
+    func write(value: Int) {
+        print(value)
+    }
+}
+
+class Pipe: InputBuffer, OutputBuffer {
+    private var data: [Int] = []
+
+    func read() -> Int? {
+        return data.removeLast()
     }
 
-    static var standardOutput: Output {
-        return { value in
-            print(value)
-        }
+    func write(value: Int) {
+        data.insert(value, at: 0)
     }
 }
