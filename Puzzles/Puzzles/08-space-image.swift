@@ -23,4 +23,35 @@ class SpaceImage {
 
         return checksum
     }
+
+    enum PixelColor: Int {
+        case black = 0
+        case white = 1
+        case transparent = 2
+    }
+
+    func solvePartTwo(data: [Int], wide: Int = 25, tall: Int = 6) {
+        let layerDigits = wide * tall
+        var composedLayer = Array(repeating: PixelColor.transparent.rawValue, count: layerDigits)
+        var i = 0
+        while i < data.count {
+            let indexInLayer = i % layerDigits
+            let pixel = data[i]
+            if composedLayer[indexInLayer] == PixelColor.transparent.rawValue {
+                composedLayer[indexInLayer] = pixel
+            }
+            i += 1
+        }
+        printLayer(data: composedLayer, wide: wide)
+    }
+
+    private func printLayer(data: [Int], wide: Int) {
+        var i = 0
+        while i < data.count {
+            let row = data[i..<(i + wide)]
+            let rowString = row.map { "\($0)" }.joined()
+            print(rowString)
+            i += wide
+        }
+    }
 }
