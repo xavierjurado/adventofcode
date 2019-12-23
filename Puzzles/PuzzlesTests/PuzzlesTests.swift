@@ -29,8 +29,12 @@ class TestInput: InputBuffer {
         self.values = values
     }
 
-    func read() -> Int? {
+    func read() -> Int {
         values.removeFirst()
+    }
+
+    func hasData() -> Bool {
+        return !values.isEmpty
     }
 }
 
@@ -40,6 +44,20 @@ class TestOutput: OutputBuffer {
 
     func write(value: Int) {
         values.append(value)
+    }
+}
+
+class PassthroughOutput: OutputBuffer {
+    var lastValue: Int?
+    var destination: OutputBuffer
+
+    init(destination: OutputBuffer) {
+        self.destination = destination
+    }
+
+    func write(value: Int) {
+        lastValue = value
+        destination.write(value: value)
     }
 }
 
@@ -149,15 +167,20 @@ class PuzzlesTests: XCTestCase {
         sut = Intcode(memory: program)
         sut.input = programInput
         sut.output = programOutput
-
         try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 999)
 
         programInput.values = [8]
+        sut = Intcode(memory: program)
+        sut.input = programInput
+        sut.output = programOutput
         try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 1000)
 
         programInput.values = [9]
+        sut = Intcode(memory: program)
+        sut.input = programInput
+        sut.output = programOutput
         try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 1001)
 
@@ -210,11 +233,11 @@ class PuzzlesTests: XCTestCase {
         let phasePermutations = [0, 1, 2, 3, 4].allPermutations()
         let scanner = SingleValueScanner<Int>(testCaseName: "07", separator: CharacterSet(charactersIn: ","))
         let program = scanner.parse()
-        let computers = (1...5).map { _ in Intcode(memory: program) }
         var bestPermutationOutput = 0
 
 
         for phaseValues in phasePermutations {
+            let computers = (1...5).map { _ in Intcode(memory: program) }
             let systemOutput = TestOutput()
             computers[0].input = TestInput(values: [phaseValues[0], 0])
 
@@ -237,6 +260,47 @@ class PuzzlesTests: XCTestCase {
         }
 
         XCTAssertEqual(bestPermutationOutput, 117312)
+    }
+
+    func testAmplificationCircuitPartTwo() {
+        let phasePermutations = [5, 6, 7, 8, 9].allPermutations()
+        let scanner = SingleValueScanner<Int>(testCaseName: "07", separator: CharacterSet(charactersIn: ","))
+        let program = scanner.parse()
+        var bestPermutationOutput = 0
+
+        for phaseValues in phasePermutations {
+            let computers = (1...5).map { _ in Intcode(memory: program) }
+
+            // Bind all computers together
+            for i in 0..<4 {
+                let c1 = computers[i]
+                let c2 = computers[i + 1]
+                let phase = phaseValues[i + 1]
+                c1.pipeOutput(to: c2)
+                c1.output.write(value: phase)
+            }
+            computers.last?.pipeOutput(to: computers[0])
+            computers.last?.output.write(value: phaseValues[0])
+            computers.last?.output.write(value: 0)
+            let systemOutput = PassthroughOutput(destination: computers.last!.output)
+            computers.last?.output = systemOutput
+
+            // Execute them all
+            var executionComplete = false
+            while !executionComplete {
+                executionComplete = true
+                for c in computers {
+                    try! c.execute()
+                    executionComplete = executionComplete && !c.awaitingInput
+                }
+            }
+
+            if systemOutput.lastValue! > bestPermutationOutput {
+                bestPermutationOutput = systemOutput.lastValue!
+            }
+        }
+
+        XCTAssertEqual(bestPermutationOutput, 1336480)
     }
 }
 

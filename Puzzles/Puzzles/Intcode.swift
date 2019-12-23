@@ -74,20 +74,17 @@ class Intcode {
         to.input = pipe
     }
 
-    func resume() throws {
-        try runLoop()
-    }
-
     func execute() throws {
-        pc = 0
-        awaitingInput = false
         try runLoop()
     }
 
     private func runLoop() throws {
-        while pc < memory.count, !awaitingInput {
+        while pc < memory.count {
             let instruction = try decodeInstruction()
             try  executeInstruction(instruction)
+            if awaitingInput {
+                break
+            }
         }
     }
 
@@ -145,11 +142,12 @@ class Intcode {
             jumpPC = memory.count // effectively breaks the execution loop
         case .read:
             let address = instruction.rawParameters[0]
-            print("Please provide an input value: ")
-            guard let value = input.read() else {
+            // print("Please provide an input value: ")
+            guard input.hasData() else {
                 awaitingInput = true
                 return
             }
+            let value = input.read()
             awaitingInput = false
             memory[address] = value
         case .write:
@@ -188,7 +186,8 @@ class Intcode {
 }
 
 protocol InputBuffer {
-    func read() -> Int?
+    func read() -> Int
+    func hasData() -> Bool
 }
 
 protocol OutputBuffer: class {
@@ -196,8 +195,12 @@ protocol OutputBuffer: class {
 }
 
 class StdIn: InputBuffer {
-    func read() -> Int? {
+    func read() -> Int {
         Int(readLine()!)!
+    }
+
+    func hasData() -> Bool {
+        return true
     }
 }
 
@@ -210,11 +213,15 @@ class StdOut: OutputBuffer {
 class Pipe: InputBuffer, OutputBuffer {
     private var data: [Int] = []
 
-    func read() -> Int? {
+    func read() -> Int {
         return data.removeLast()
     }
 
     func write(value: Int) {
         data.insert(value, at: 0)
+    }
+
+    func hasData() -> Bool {
+        !data.isEmpty
     }
 }
