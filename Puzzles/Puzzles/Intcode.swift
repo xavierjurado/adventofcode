@@ -57,12 +57,16 @@ class Intcode {
 
     /// State
     private var pc = 0
-    private(set) var memory: [Int] = []
+    private(set) var memory: [Int]
 
     /// IO
     var input: InputBuffer = StdIn()
     var output: OutputBuffer = StdOut()
     private(set) var awaitingInput = false
+
+    init(memory: [Int]) {
+        self.memory = memory
+    }
 
     func pipeOutput(to: Intcode) {
         let pipe = Pipe()
@@ -70,18 +74,18 @@ class Intcode {
         to.input = pipe
     }
 
-    func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
-        var program = program
-        program[1] = noun
-        program[2] = verb
-        return program
+    func resume() throws {
+        try runLoop()
     }
 
-    func execute(program: [Int]) throws {
-        memory = program
+    func execute() throws {
         pc = 0
+        awaitingInput = false
+        try runLoop()
+    }
 
-        while pc < memory.count {
+    private func runLoop() throws {
+        while pc < memory.count, !awaitingInput {
             let instruction = try decodeInstruction()
             try  executeInstruction(instruction)
         }
@@ -142,7 +146,11 @@ class Intcode {
         case .read:
             let address = instruction.rawParameters[0]
             print("Please provide an input value: ")
-            guard let value = input.read() else { fatalError() }
+            guard let value = input.read() else {
+                awaitingInput = true
+                return
+            }
+            awaitingInput = false
             memory[address] = value
         case .write:
             let value = p[0]

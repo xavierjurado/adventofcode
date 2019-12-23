@@ -1,15 +1,19 @@
 import Foundation
 
 class ProgramAlarm {
-
-    let computer = Intcode()
-
-
     func solve(program: [Int]) -> Int {
-        let program = computer.setup(program: program, noun: 12, verb: 2)
-        try! computer.execute(program: program)
+        let program = setup(program: program, noun: 12, verb: 2)
+        let computer = Intcode(memory: program)
+        try! computer.execute()
 
         return computer.memory[0]
+    }
+
+    func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
+        var program = program
+        program[1] = noun
+        program[2] = verb
+        return program
     }
 
 }
@@ -20,9 +24,10 @@ extension ProgramAlarm {
 
         for noun in 0...99 {
             for verb in 0...99 {
-                let program = computer.setup(program: program, noun: noun, verb: verb)
+                let program = setup(program: program, noun: noun, verb: verb)
+                let computer = Intcode(memory: program)
                 do {
-                    try computer.execute(program: program)
+                    try computer.execute()
                 } catch {
                     continue
                 }

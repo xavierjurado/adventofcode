@@ -71,8 +71,8 @@ class PuzzlesTests: XCTestCase {
     }
 
     func testProgramAlarm() {
-        let sut = Intcode()
-        XCTAssertNoThrow(try sut.execute(program: [1,9,10,3,2,3,11,0,99,30,40,50]))
+        let sut = Intcode(memory: [1,9,10,3,2,3,11,0,99,30,40,50])
+        XCTAssertNoThrow(try sut.execute())
         XCTAssertEqual(sut.memory, [3500,9,10,70,2,3,11,0,99,30,40,50])
     }
 
@@ -134,10 +134,11 @@ class PuzzlesTests: XCTestCase {
     }
 
     func testSunnyWithAChanceOfAsteroids() {
-        let sut = Intcode()
-        XCTAssertNoThrow(try sut.execute(program: [1002,4,3,4,33]))
+        var sut = Intcode(memory: [1002,4,3,4,33])
+        XCTAssertNoThrow(try sut.execute())
         XCTAssertEqual(sut.memory, [1002,4,3,4,99])
-        XCTAssertNoThrow(try sut.execute(program: [1101,100,-1,4,0]))
+        sut = Intcode(memory: [1101,100,-1,4,0])
+        XCTAssertNoThrow(try sut.execute())
         XCTAssertEqual(sut.memory, [1101,100,-1,4,99])
 
         let programInput = TestInput(values: [7])
@@ -145,41 +146,46 @@ class PuzzlesTests: XCTestCase {
         let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
         1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
         999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
+        sut = Intcode(memory: program)
         sut.input = programInput
         sut.output = programOutput
 
-        try? sut.execute(program: program)
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 999)
 
         programInput.values = [8]
-        try? sut.execute(program: program)
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 1000)
 
         programInput.values = [9]
-        try? sut.execute(program: program)
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 1001)
 
         let program2 = [3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9]
         programInput.values = [0]
-        try? sut.execute(program: program2)
+        sut = Intcode(memory: program2)
+        sut.input = programInput
+        sut.output = programOutput
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 0)
     }
 
     func testSunnyWithAChanceOfAsteroidsSolution() {
-        let sut = Intcode()
         let scanner = SingleValueScanner<Int>(testCaseName: "05-sunny-with-a-chance-of-asteroids", separator: CharacterSet(charactersIn: ","))
         let input = scanner.parse()
         let programInput = TestInput(values: [1])
         let programOutput = TestOutput()
+        var sut = Intcode(memory: input)
         sut.input = programInput
         sut.output = programOutput
 
-        try? sut.execute(program: input)
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 5821753)
 
-        let partTwoProgramInput = TestInput(values: [5])
-        sut.input = partTwoProgramInput
-        try? sut.execute(program: input)
+        sut = Intcode(memory: input)
+        sut.input = TestInput(values: [5])
+        sut.output = programOutput
+        try? sut.execute()
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
 
@@ -201,10 +207,10 @@ class PuzzlesTests: XCTestCase {
     }
 
     func testAmplificationCircuit() {
-        let computers = (1...5).map { _ in Intcode() }
         let phasePermutations = [0, 1, 2, 3, 4].allPermutations()
         let scanner = SingleValueScanner<Int>(testCaseName: "07", separator: CharacterSet(charactersIn: ","))
         let program = scanner.parse()
+        let computers = (1...5).map { _ in Intcode(memory: program) }
         var bestPermutationOutput = 0
 
 
@@ -218,11 +224,11 @@ class PuzzlesTests: XCTestCase {
                 let phase = phaseValues[i + 1]
                 c1.pipeOutput(to: c2)
                 c1.output.write(value: phase)
-                try? c1.execute(program: program)
+                try? c1.execute()
             }
 
             computers.last?.output = systemOutput
-            try? computers.last?.execute(program: program)
+            try? computers.last?.execute()
 
             if systemOutput.values[0] > bestPermutationOutput {
                 bestPermutationOutput = systemOutput.values[0]
