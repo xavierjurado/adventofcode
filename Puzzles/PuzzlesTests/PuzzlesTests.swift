@@ -150,20 +150,23 @@ class PuzzlesTests: XCTestCase {
         let program = [3,21,1008,21,8,20,1005,20,22,107,8,21,20,1006,20,31,
         1106,0,36,98,0,0,1002,21,125,20,4,20,1105,1,46,104,
         999,1105,1,46,1101,1000,1,20,4,20,1105,1,46,98,99]
-        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        sut.programInput = programInput.input
+        sut.programOutput = programOutput.output
+
+        try? sut.execute(program: program)
         XCTAssertEqual(programOutput.values.last, 999)
 
         programInput.values = [8]
-        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program)
         XCTAssertEqual(programOutput.values.last, 1000)
 
         programInput.values = [9]
-        try? sut.execute(program: program, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program)
         XCTAssertEqual(programOutput.values.last, 1001)
 
         let program2 = [3,12,6,12,15,1,13,14,13,4,13,99,-1,0,1,9]
         programInput.values = [0]
-        try? sut.execute(program: program2, input: programInput.input, output: programOutput.output)
+        try? sut.execute(program: program2)
         XCTAssertEqual(programOutput.values.last, 0)
     }
 
@@ -173,11 +176,15 @@ class PuzzlesTests: XCTestCase {
         let input = scanner.parse()
         let programInput = TestInput(values: [1])
         let programOutput = TestOutput()
-        try? sut.execute(program: input, input: programInput.input, output: programOutput.output)
+        sut.programInput = programInput.input
+        sut.programOutput = programOutput.output
+
+        try? sut.execute(program: input)
         XCTAssertEqual(programOutput.values.last, 5821753)
 
         let partTwoProgramInput = TestInput(values: [5])
-        try? sut.execute(program: input, input: partTwoProgramInput.input, output: programOutput.output)
+        sut.programInput = partTwoProgramInput.input
+        try? sut.execute(program: input)
         XCTAssertEqual(programOutput.values.last, 11956381)
     }
 
@@ -216,7 +223,9 @@ class PuzzlesTests: XCTestCase {
                 let input = output[i]
                 let testInput = TestInput(values: [phase, input])
                 let testOutput = TestOutput()
-                try? orig.execute(program: program, input: testInput.input, output: testOutput.output)
+                orig.programInput = testInput.input
+                orig.programOutput = testOutput.output
+                try? orig.execute(program: program)
                 output[i + 1] = testOutput.values[0]
                 i += 1
             }

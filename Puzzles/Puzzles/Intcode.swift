@@ -61,8 +61,10 @@ class Intcode {
     /// State
     private var pc = 0
     private(set) var memory: [Int] = []
-    private var programInput: Input?
-    private var programOutput: Output?
+
+    /// IO
+   var programInput: Input = Intcode.standardInput
+   var programOutput: Output = Intcode.standardOutput
 
     func setup(program: [Int], noun: Int, verb: Int) -> [Int] {
         var program = program
@@ -71,11 +73,9 @@ class Intcode {
         return program
     }
 
-    func execute(program: [Int], input: @escaping Input = Intcode.standardInput, output: @escaping Output = Intcode.standardOutput) throws {
+    func execute(program: [Int]) throws {
         memory = program
         pc = 0
-        programInput = input
-        programOutput = output
 
         while pc < memory.count {
             let instruction = try decodeInstruction()
@@ -138,12 +138,12 @@ class Intcode {
         case .read:
             let address = instruction.rawParameters[0]
             print("Please provide an input value: ")
-            let input = programInput!()
+            let input = programInput()
             guard let value = Int(input) else { fatalError() }
             memory[address] = value
         case .write:
             let value = p[0]
-            programOutput?(value)
+            programOutput(value)
         case .jumpIfTrue:
             let p1 = p[0]
             let p2 = p[1]
