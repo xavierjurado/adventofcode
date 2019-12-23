@@ -1,11 +1,3 @@
-//
-//  PuzzlesTests.swift
-//  PuzzlesTests
-//
-//  Created by Xavier Jurado on 03/12/2019.
-//  Copyright © 2019 Xavier Jurado. All rights reserved.
-//
-
 import XCTest
 @testable import Puzzles
 
