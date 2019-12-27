@@ -83,7 +83,7 @@ class PuzzlesTests: XCTestCase {
     func testProgramAlarm() {
         let sut = Intcode(memory: [1,9,10,3,2,3,11,0,99,30,40,50])
         XCTAssertNoThrow(try sut.execute())
-        XCTAssertEqual(sut.memory, [3500,9,10,70,2,3,11,0,99,30,40,50])
+        XCTAssertEqual(sut.memory.initialMemory, [3500,9,10,70,2,3,11,0,99,30,40,50])
     }
 
     func testProgramAlarmSolution() {
@@ -146,10 +146,10 @@ class PuzzlesTests: XCTestCase {
     func testSunnyWithAChanceOfAsteroids() {
         var sut = Intcode(memory: [1002,4,3,4,33])
         XCTAssertNoThrow(try sut.execute())
-        XCTAssertEqual(sut.memory, [1002,4,3,4,99])
+        XCTAssertEqual(sut.memory.initialMemory, [1002,4,3,4,99])
         sut = Intcode(memory: [1101,100,-1,4,0])
         XCTAssertNoThrow(try sut.execute())
-        XCTAssertEqual(sut.memory, [1101,100,-1,4,99])
+        XCTAssertEqual(sut.memory.initialMemory, [1101,100,-1,4,99])
 
         let programInput = TestInput(values: [7])
         let programOutput = TestOutput()

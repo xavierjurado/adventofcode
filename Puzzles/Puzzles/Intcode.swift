@@ -55,7 +55,6 @@ class Intcode {
 
     enum ProgramError: Error {
         case unknownOpcode
-        case outOfBounds
         case invalidParameter
     }
 
@@ -65,18 +64,46 @@ class Intcode {
         case relative = 2
     }
 
+    struct Memory {
+        private(set) var initialMemory: [Int]
+        private var sparseMemory: [Int: Int] = [:]
+
+        init(_ memory: [Int]) {
+            initialMemory = memory
+        }
+
+        subscript(index: Int) -> Int {
+            get {
+                if index < initialMemory.count {
+                    return initialMemory[index]
+                } else {
+                    return sparseMemory[index, default: 0]
+                }
+            }
+            set {
+                if index < initialMemory.count {
+                    initialMemory[index] = newValue
+                } else {
+                    sparseMemory[index] = newValue
+                }
+            }
+        }
+    }
+
     /// State
     private var pc = 0 // program counter
     private var rb = 0 // relative base
-    private(set) var memory: [Int]
+    private(set) var memory: Memory
 
     /// IO
     var input: InputBuffer = StdIn()
     var output: OutputBuffer = StdOut()
     private(set) var awaitingInput = false
+    private let executableSize: Int
 
     init(memory: [Int]) {
-        self.memory = memory
+        self.memory = Memory(memory)
+        self.executableSize = memory.count
     }
 
     func pipeOutput(to: Intcode) {
@@ -90,7 +117,7 @@ class Intcode {
     }
 
     private func runLoop() throws {
-        while pc < memory.count {
+        while pc < executableSize {
             let instruction = try decodeInstruction()
             try  executeInstruction(instruction)
             if awaitingInput {
@@ -106,24 +133,15 @@ class Intcode {
             throw ProgramError.unknownOpcode
         }
         var rawOptions = rawOpcode / 100
-        var options = Array(repeating: ParameterMode.position, count: opcode.numberOfParameters)
-        var i = 0
-        while rawOptions > 0 {
+        let parameters = try (0..<opcode.numberOfParameters).map { i -> Instruction.Parameter in
             let rawParameterMode = rawOptions % 10
             guard let parameterMode = ParameterMode(rawValue: rawParameterMode) else {
                 throw ProgramError.unknownOpcode
             }
-            options[i] = parameterMode
+            let value = memory[pc + 1 + i]
             rawOptions = rawOptions / 10
-            i += 1
+            return Instruction.Parameter(value: value, mode: parameterMode)
         }
-
-        guard pc + opcode.numberOfParameters < memory.count else {
-            throw ProgramError.outOfBounds
-        }
-
-        let values = memory[(pc + 1)..<(pc + 1 + opcode.numberOfParameters)]
-        let parameters = zip(values, options).map { Instruction.Parameter(value: $0, mode: $1) }
 
         return Instruction(opcode: opcode, parameters: parameters)
     }
@@ -163,7 +181,7 @@ class Intcode {
             let right = read(p[1])
             try write(p[2], value: left * right)
         case .halt:
-            jumpPC = memory.count // effectively breaks the execution loop
+            jumpPC = executableSize // effectively breaks the execution loop
         case .read:
             print("Please provide an input value: ")
             guard input.hasData() else {
