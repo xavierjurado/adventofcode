@@ -11,6 +11,7 @@ class Intcode {
         case jumpIfFalse = 6
         case lessThan = 7
         case equals = 8
+        case offsetRelativeBase = 9
         case halt = 99
 
         var numberOfParameters: Int {
@@ -31,6 +32,8 @@ class Intcode {
                 return 3
             case .equals:
                 return 3
+            case .offsetRelativeBase:
+                return 1
             }
         }
     }
@@ -193,6 +196,9 @@ class Intcode {
             let p1 = read(p[0])
             let p2 = read(p[1])
             try write(p[2], value: p1 == p2 ? 1 : 0)
+        case .offsetRelativeBase:
+            let offset = read(p[0])
+            rb += offset
         }
 
         if let jumpPC = jumpPC {
