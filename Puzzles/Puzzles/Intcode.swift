@@ -59,7 +59,7 @@ class Intcode {
     enum ParameterMode: Int, RawRepresentable {
         case position = 0
         case immediate = 1
-//        case relative = 2
+        case relative = 2
     }
 
     /// State
@@ -131,8 +131,8 @@ class Intcode {
             return memory[param.value]
         case .immediate:
             return param.value
-//        case .relative:
-//            return memory[rb + index]
+        case .relative:
+            return memory[rb + param.value]
         }
     }
 
@@ -142,6 +142,8 @@ class Intcode {
             memory[param.value] = value
         case .immediate:
             throw ProgramError.invalidParameter
+        case .relative:
+            memory[rb + param.value] = value
         }
     }
 
