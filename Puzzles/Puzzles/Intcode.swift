@@ -183,7 +183,7 @@ class Intcode {
         case .halt:
             jumpPC = executableSize // effectively breaks the execution loop
         case .read:
-            print("Please provide an input value: ")
+            //print("Please provide an input value: ")
             guard input.hasData() else {
                 awaitingInput = true
                 return

@@ -13,6 +13,9 @@
 		4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */; };
 		4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */; };
 		474A59AD239D67F40039635C /* Intcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A59AC239D67F40039635C /* Intcode.swift */; };
+		474F208623B64E2D000A6CA9 /* 09-sensor-boost-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F208523B64E2D000A6CA9 /* 09-sensor-boost-test.swift */; };
+		474F208823B64E5B000A6CA9 /* 09.txt in Resources */ = {isa = PBXBuildFile; fileRef = 474F208723B64E5B000A6CA9 /* 09.txt */; };
+		474F208A23B64F12000A6CA9 /* IntcodeTestDoubles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F208923B64F12000A6CA9 /* IntcodeTestDoubles.swift */; };
 		474F850823B16CC600360D8E /* 08-space-image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F850723B16CC600360D8E /* 08-space-image.swift */; };
 		474F850A23B16ECA00360D8E /* 08-space-image-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F850923B16ECA00360D8E /* 08-space-image-test.swift */; };
 		474F850C23B1702300360D8E /* 08.txt in Resources */ = {isa = PBXBuildFile; fileRef = 474F850B23B1702300360D8E /* 08.txt */; };
@@ -48,6 +51,9 @@
 		4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-the-tirany-of-the-rocket-equation.swift"; sourceTree = "<group>"; };
 		4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "01-the-tirany-of-the-rocket-equation.txt"; sourceTree = "<group>"; };
 		474A59AC239D67F40039635C /* Intcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intcode.swift; sourceTree = "<group>"; };
+		474F208523B64E2D000A6CA9 /* 09-sensor-boost-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "09-sensor-boost-test.swift"; sourceTree = "<group>"; };
+		474F208723B64E5B000A6CA9 /* 09.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 09.txt; sourceTree = "<group>"; };
+		474F208923B64F12000A6CA9 /* IntcodeTestDoubles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntcodeTestDoubles.swift; sourceTree = "<group>"; };
 		474F850723B16CC600360D8E /* 08-space-image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "08-space-image.swift"; sourceTree = "<group>"; };
 		474F850923B16ECA00360D8E /* 08-space-image-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "08-space-image-test.swift"; sourceTree = "<group>"; };
 		474F850B23B1702300360D8E /* 08.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 08.txt; sourceTree = "<group>"; };
@@ -122,8 +128,10 @@
 				4710A1692397021F008C408B /* PuzzlesTests.swift */,
 				4759EDC4239C24B1006406ED /* SingleValueScanner.swift */,
 				474F850923B16ECA00360D8E /* 08-space-image-test.swift */,
+				474F208523B64E2D000A6CA9 /* 09-sensor-boost-test.swift */,
 				474F850D23B1703200360D8E /* Resources */,
 				4710A16B2397021F008C408B /* Info.plist */,
+				474F208923B64F12000A6CA9 /* IntcodeTestDoubles.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -138,6 +146,7 @@
 				4750144723A6C09C00512E66 /* 06.txt */,
 				4750144923A6EFFA00512E66 /* 07.txt */,
 				474F850B23B1702300360D8E /* 08.txt */,
+				474F208723B64E5B000A6CA9 /* 09.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -247,6 +256,7 @@
 				4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
 				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
+				474F208823B64E5B000A6CA9 /* 09.txt in Resources */,
 				477B013D23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt in Resources */,
 				4750144A23A6EFFA00512E66 /* 07.txt in Resources */,
 			);
@@ -275,6 +285,8 @@
 			files = (
 				4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */,
 				4710A16A2397021F008C408B /* PuzzlesTests.swift in Sources */,
+				474F208A23B64F12000A6CA9 /* IntcodeTestDoubles.swift in Sources */,
+				474F208623B64E2D000A6CA9 /* 09-sensor-boost-test.swift in Sources */,
 				474F850A23B16ECA00360D8E /* 08-space-image-test.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

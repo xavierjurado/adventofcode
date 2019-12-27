@@ -1,6 +1,13 @@
 import Foundation
 @testable import Puzzles
 
+extension Bundle {
+    private class Token {}
+    class var current: Bundle {
+        return self.init(for: Token.self)
+    }
+}
+
 protocol Scannable {
     static func parse(scanner: Scanner) -> Self?
 }
