@@ -36,9 +36,14 @@ class Intcode {
     }
 
     struct Instruction {
+
+        struct Parameter {
+            let value: Int
+            let mode: ParameterMode
+        }
+
         let opcode: Opcode
-        let parameters: [Int]
-        let rawParameters: [Int]
+        let parameters: [Parameter]
 
         var length: Int {
             return 1 + opcode.numberOfParameters
@@ -48,15 +53,18 @@ class Intcode {
     enum ProgramError: Error {
         case unknownOpcode
         case outOfBounds
+        case invalidParameter
     }
 
     enum ParameterMode: Int, RawRepresentable {
         case position = 0
         case immediate = 1
+//        case relative = 2
     }
 
     /// State
-    private var pc = 0
+    private var pc = 0 // program counter
+    private var rb = 0 // relative base
     private(set) var memory: [Int]
 
     /// IO
@@ -111,17 +119,30 @@ class Intcode {
             throw ProgramError.outOfBounds
         }
 
-        let rawParameters = memory[(pc + 1)..<(pc + 1 + opcode.numberOfParameters)]
-        let parameters = zip(rawParameters, options).map { value, mode -> Int in
-            switch mode {
-            case .position:
-                return memory[value]
-            case .immediate:
-                return value
-            }
-        }
+        let values = memory[(pc + 1)..<(pc + 1 + opcode.numberOfParameters)]
+        let parameters = zip(values, options).map { Instruction.Parameter(value: $0, mode: $1) }
 
-        return Instruction(opcode: opcode, parameters: parameters, rawParameters: Array(rawParameters))
+        return Instruction(opcode: opcode, parameters: parameters)
+    }
+
+    private func read(_ param: Instruction.Parameter) -> Int {
+        switch param.mode {
+        case .position:
+            return memory[param.value]
+        case .immediate:
+            return param.value
+//        case .relative:
+//            return memory[rb + index]
+        }
+    }
+
+    private func write(_ param: Instruction.Parameter, value: Int) throws {
+        switch param.mode {
+        case .position:
+            memory[param.value] = value
+        case .immediate:
+            throw ProgramError.invalidParameter
+        }
     }
 
     private func executeInstruction(_ instruction: Instruction) throws {
@@ -129,52 +150,47 @@ class Intcode {
         let p = instruction.parameters
         switch instruction.opcode {
         case .add:
-            let left = p[0]
-            let right = p[1]
-            let resultAddress = instruction.rawParameters[2]
-            memory[resultAddress] = left + right
+            let left = read(p[0])
+            let right = read(p[1])
+            try write(p[2], value: left + right)
         case .multiply:
-            let left = p[0]
-            let right = p[1]
-            let resultAddress = instruction.rawParameters[2]
-            memory[resultAddress] = left * right
+            let left = read(p[0])
+            let right = read(p[1])
+            try write(p[2], value: left * right)
         case .halt:
             jumpPC = memory.count // effectively breaks the execution loop
         case .read:
-            let address = instruction.rawParameters[0]
-            // print("Please provide an input value: ")
+            print("Please provide an input value: ")
             guard input.hasData() else {
                 awaitingInput = true
                 return
             }
             let value = input.read()
             awaitingInput = false
-            memory[address] = value
+            try write(p[0], value: value)
         case .write:
-            let value = p[0]
+            let value = read(p[0])
             output.write(value: value)
         case .jumpIfTrue:
-            let p1 = p[0]
-            let p2 = p[1]
+            let p1 = read(p[0])
+            let p2 = read(p[1])
             if p1 != 0 {
                 jumpPC = p2
             }
         case .jumpIfFalse:
-            let p1 = p[0]
-            let p2 = p[1]
+            let p1 = read(p[0])
+            let p2 = read(p[1])
             if p1 == 0 {
                 jumpPC = p2
             }
         case .lessThan:
-            let p1 = p[0]
-            let p2 = p[1]
-            let address = instruction.rawParameters[2]
-            memory[address] = p1 < p2 ? 1 : 0
+            let p1 = read(p[0])
+            let p2 = read(p[1])
+            try write(p[2], value: p1 < p2 ? 1 : 0)
         case .equals:
-            let p1 = p[0]
-            let p2 = p[1]
-            let address = instruction.rawParameters[2]
-            memory[address] = p1 == p2 ? 1 : 0
+            let p1 = read(p[0])
+            let p2 = read(p[1])
+            try write(p[2], value: p1 == p2 ? 1 : 0)
         }
 
         if let jumpPC = jumpPC {
