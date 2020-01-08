@@ -33,7 +33,7 @@ class PaintingRobotInterface: InputBuffer, OutputBuffer {
         var y: Int
     }
 
-    private(set) var paintedPanels: [XY: Color] = [:]
+   fileprivate var paintedPanels: [XY: Color] = [:]
     private var currentPosition: XY = XY(x: 0, y: 0)
     private var currentDirection: Direction = .up
     private var writeCount: Int = 0
@@ -84,5 +84,36 @@ class SpacePolice {
         try? program.execute()
 
         return interface.paintedPanels.count
+    }
+
+    func solvePartTwo(memory: [Int]) -> String {
+        let program = Intcode(memory: memory)
+        let interface = PaintingRobotInterface()
+        interface.paintedPanels[PaintingRobotInterface.XY(x: 0, y: 0)] = .white
+        program.input = interface
+        program.output = interface
+        try? program.execute()
+
+        var minX = Int.max
+        var maxX = Int.min
+        var minY = Int.max
+        var maxY = Int.min
+
+        for xy in interface.paintedPanels.keys {
+            minX = min(xy.x, minX)
+            maxX = max(xy.x, maxX)
+            minY = min(xy.y, minY)
+            maxY = max(xy.y, maxY)
+        }
+
+        let dy = abs(maxY - minY) + 1
+        let dx = abs(maxX - minX) + 1
+
+        var normalizedOutput: [[Int]] = Array(repeating: Array(repeating: 0, count: dx), count:dy)
+        for (xy, color) in interface.paintedPanels {
+            normalizedOutput[xy.y - minY][xy.x - minX] = color.rawValue
+        }
+
+        return normalizedOutput.map { $0.map(String.init).joined() }.joined(separator: "\n")
     }
 }
