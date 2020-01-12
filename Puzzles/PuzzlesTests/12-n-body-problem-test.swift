@@ -39,6 +39,15 @@ class NBodyProblemTest: XCTestCase {
 
         XCTAssertEqual(sut.solve(bodies: data), 13399)
     }
+
+    func testPartTwo() {
+        let separators = CharacterSet(charactersIn: "<>xyz=, \n")
+        let scanner = SingleValueScanner<NBodyProblem.Body>(testCaseName: "12", separator: separators)
+        let data = scanner.parse()
+        let sut = NBodyProblem()
+
+        XCTAssertEqual(sut.solvePartTwo(bodies: data), 312992287193064)
+    }
 }
 
 extension NBodyProblem.Body: Scannable {

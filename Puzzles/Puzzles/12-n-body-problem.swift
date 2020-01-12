@@ -1,7 +1,7 @@
 import Foundation
 
 class NBodyProblem {
-    struct XYZ: Equatable {
+    struct XYZ: Hashable {
         var x: Int
         var y: Int
         var z: Int
@@ -11,7 +11,7 @@ class NBodyProblem {
         }
     }
 
-    struct Body {
+    struct Body: Hashable, CustomStringConvertible {
         var position: XYZ
         var velocity: XYZ
 
@@ -44,6 +44,10 @@ class NBodyProblem {
 
         var energy: Int {
             potentialEnergy * kineticEnergy
+        }
+
+        var description: String {
+            return "pos=<x= \(position.x), y= \(position.y), z= \(position.z)>, vel=<x= \(velocity.x), y= \(velocity.y), z= \(velocity.z)>"
         }
     }
 
@@ -84,5 +88,101 @@ class NBodyProblem {
         let totalEnergy = bodies.map { $0.energy }.reduce(0, +)
 
         return totalEnergy
+    }
+
+    func solvePartTwo(bodies: [Body]) -> Int {
+        var xSnapshots: Set<[Int]> = []
+        var ySnapshots: Set<[Int]> = []
+        var zSnapshots: Set<[Int]> = []
+        var xPeriod: Int?
+        var yPeriod: Int?
+        var zPeriod: Int?
+
+        var bodies = bodies
+        var stepCount = 0
+        while xPeriod == nil || yPeriod == nil || zPeriod == nil {
+            if xPeriod == nil {
+                let xSnapshot = bodies.xSnapshot()
+                if xSnapshots.contains(xSnapshot) {
+                    xPeriod = stepCount
+                } else {
+                    xSnapshots.insert(xSnapshot)
+                }
+            }
+
+            if yPeriod == nil {
+                let ySnapshot = bodies.ySnapshot()
+                if ySnapshots.contains(ySnapshot) {
+                    yPeriod = stepCount
+                } else {
+                    ySnapshots.insert(ySnapshot)
+                }
+            }
+
+            if zPeriod == nil {
+                let zSnapshot = bodies.zSnapshot()
+                if zSnapshots.contains(zSnapshot) {
+                    zPeriod = stepCount
+                } else {
+                    zSnapshots.insert(zSnapshot)
+                }
+            }
+
+            bodies = step(bodies: bodies)
+            stepCount += 1
+        }
+
+        return lcm(of: [xPeriod!, yPeriod!, zPeriod!])
+    }
+
+    func gcd<C: Collection>(of values: C) -> Int where C.Element == Int {
+        let first = values.first!
+        let other = values.dropFirst()
+
+        if other.count == 1 {
+            return gcd(first, other.first!)
+        } else {
+            return gcd(first, gcd(of: other))
+        }
+    }
+
+    func lcm<C: Collection>(of values: C) -> Int where C.Element == Int {
+        let first = values.first!
+        let other = values.dropFirst()
+
+        return other.reduce(first) { (result, value) -> Int in
+            lcm(result, value)
+        }
+    }
+
+    func gcd(_ m: Int, _ n: Int) -> Int {
+        var a = max(m, n)
+        var b = min(m, n)
+
+        while b != 0 {
+            let r = a % b
+            a = b
+            b = r
+        }
+
+        return a
+    }
+
+    func lcm(_ m: Int, _ n: Int) -> Int {
+        return (m * n) / gcd(m, n)
+    }
+}
+
+extension Array where Element == NBodyProblem.Body {
+    func xSnapshot() -> [Int] {
+        return flatMap { [$0.position.x, $0.velocity.x] }
+    }
+
+    func ySnapshot() -> [Int] {
+        return flatMap { [$0.position.y, $0.velocity.y] }
+    }
+
+    func zSnapshot() -> [Int] {
+        return flatMap { [$0.position.z, $0.velocity.z] }
     }
 }
