@@ -37,6 +37,8 @@
 		4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC4239C24B1006406ED /* SingleValueScanner.swift */; };
 		4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4759EDC6239C631A006406ED /* 03-crossed-wires.txt */; };
 		4759EDC9239C7B9D006406ED /* 04-secure-container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC8239C7B9D006406ED /* 04-secure-container.swift */; };
+		475A2C0623CD1DFF00A189F9 /* 14-space-stoichiometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475A2C0523CD1DFF00A189F9 /* 14-space-stoichiometry.swift */; };
+		475A2C0823CD243E00A189F9 /* 14-space-stoichiometry-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 475A2C0723CD243E00A189F9 /* 14-space-stoichiometry-test.swift */; };
 		4764501323BEB3D50051B428 /* 10.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4764501223BEB3D50051B428 /* 10.txt */; };
 		47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47757CD6239833C900C43809 /* 02-program-alarm.swift */; };
 		47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47757CD82398392A00C43809 /* 02-program-alarm.txt */; };
@@ -87,6 +89,8 @@
 		4759EDC4239C24B1006406ED /* SingleValueScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleValueScanner.swift; sourceTree = "<group>"; };
 		4759EDC6239C631A006406ED /* 03-crossed-wires.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "03-crossed-wires.txt"; sourceTree = "<group>"; };
 		4759EDC8239C7B9D006406ED /* 04-secure-container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "04-secure-container.swift"; sourceTree = "<group>"; };
+		475A2C0523CD1DFF00A189F9 /* 14-space-stoichiometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "14-space-stoichiometry.swift"; sourceTree = "<group>"; };
+		475A2C0723CD243E00A189F9 /* 14-space-stoichiometry-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "14-space-stoichiometry-test.swift"; sourceTree = "<group>"; };
 		4764501223BEB3D50051B428 /* 10.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 10.txt; sourceTree = "<group>"; };
 		47757CD6239833C900C43809 /* 02-program-alarm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "02-program-alarm.swift"; sourceTree = "<group>"; };
 		47757CD82398392A00C43809 /* 02-program-alarm.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "02-program-alarm.txt"; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 				474F564523C52DFF0026DA59 /* 11-space-police.swift */,
 				474F10AD23CA70FA000987EC /* 12-n-body-problem.swift */,
 				4723BE9923CB52A70087B8DB /* 13-care-package.swift */,
+				475A2C0523CD1DFF00A189F9 /* 14-space-stoichiometry.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -164,6 +169,7 @@
 				4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */,
 				474F850D23B1703200360D8E /* Resources */,
 				4710A16B2397021F008C408B /* Info.plist */,
+				475A2C0723CD243E00A189F9 /* 14-space-stoichiometry-test.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -310,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				474A59AD239D67F40039635C /* Intcode.swift in Sources */,
+				475A2C0623CD1DFF00A189F9 /* 14-space-stoichiometry.swift in Sources */,
 				474ED3E123B8233100E056A8 /* 10-monitoring-station.swift in Sources */,
 				4759EDC9239C7B9D006406ED /* 04-secure-container.swift in Sources */,
 				474F10AE23CA70FA000987EC /* 12-n-body-problem.swift in Sources */,
@@ -332,6 +339,7 @@
 				474ED3E323B82F3F00E056A8 /* 10-monitoring-station-test.swift in Sources */,
 				474F10B023CA7A5C000987EC /* 12-n-body-problem-test.swift in Sources */,
 				4723BE9C23CB71DF0087B8DB /* 13-care-package-test.swift in Sources */,
+				475A2C0823CD243E00A189F9 /* 14-space-stoichiometry-test.swift in Sources */,
 				474F564823C534660026DA59 /* 11-space-police-test.swift in Sources */,
 				474F208A23B64F12000A6CA9 /* IntcodeTestDoubles.swift in Sources */,
 				474F208623B64E2D000A6CA9 /* 09-sensor-boost-test.swift in Sources */,
