@@ -12,6 +12,7 @@
 		4710A16C2397021F008C408B /* Puzzles.h in Headers */ = {isa = PBXBuildFile; fileRef = 4710A15E2397021F008C408B /* Puzzles.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */; };
 		4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */; };
+		47222C5023CE64CB00ACAB0C /* 14.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47222C4F23CE64CB00ACAB0C /* 14.txt */; };
 		4723BE9A23CB52A70087B8DB /* 13-care-package.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4723BE9923CB52A70087B8DB /* 13-care-package.swift */; };
 		4723BE9C23CB71DF0087B8DB /* 13-care-package-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */; };
 		4723BE9E23CB725F0087B8DB /* 13.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4723BE9D23CB725F0087B8DB /* 13.txt */; };
@@ -64,6 +65,7 @@
 		4710A16B2397021F008C408B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4710A1752397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "01-the-tirany-of-the-rocket-equation.swift"; sourceTree = "<group>"; };
 		4710A177239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "01-the-tirany-of-the-rocket-equation.txt"; sourceTree = "<group>"; };
+		47222C4F23CE64CB00ACAB0C /* 14.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 14.txt; sourceTree = "<group>"; };
 		4723BE9923CB52A70087B8DB /* 13-care-package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "13-care-package.swift"; sourceTree = "<group>"; };
 		4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "13-care-package-test.swift"; sourceTree = "<group>"; };
 		4723BE9D23CB725F0087B8DB /* 13.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13.txt; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				474F564323C52DD40026DA59 /* 11.txt */,
 				474F10B123CA7AC4000987EC /* 12.txt */,
 				4723BE9D23CB725F0087B8DB /* 13.txt */,
+				47222C4F23CE64CB00ACAB0C /* 14.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -295,6 +298,7 @@
 			files = (
 				474F564423C52DD50026DA59 /* 11.txt in Resources */,
 				474F10B223CA7AC4000987EC /* 12.txt in Resources */,
+				47222C5023CE64CB00ACAB0C /* 14.txt in Resources */,
 				474F850C23B1702300360D8E /* 08.txt in Resources */,
 				4750144823A6C09C00512E66 /* 06.txt in Resources */,
 				4723BE9E23CB725F0087B8DB /* 13.txt in Resources */,
