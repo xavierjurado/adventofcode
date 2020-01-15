@@ -43,6 +43,15 @@ class SpaceStoichiometryTest: XCTestCase {
         let sut = SpaceStoichiometry()
         XCTAssertEqual(sut.solvePartOne(reactions: reactions), 136771)
     }
+
+    func testPartTwo() {
+        let characterSet = CharacterSet(charactersIn: " ,=>")
+        let scanner = SingleValueScanner<Reaction>(testCaseName: "14", separator: characterSet)
+        let reactions = scanner.parse()
+
+        let sut = SpaceStoichiometry()
+        XCTAssertEqual(sut.solvePartTwo(reactions: reactions), 8193614)
+    }
 }
 
 extension SpaceStoichiometry.Reaction: Scannable {

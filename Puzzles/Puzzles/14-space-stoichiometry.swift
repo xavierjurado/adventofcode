@@ -24,15 +24,14 @@ class SpaceStoichiometry {
     }
 
     // this could be done also with a simple topological sort
-    func solvePartOne(reactions: [Reaction]) -> Int {
+    func solvePartOne(reactions: [Reaction], fuel: Int = 1) -> Int {
 
         var reactionsByOutput: [String: Reaction] = [:]
         for r in reactions {
             reactionsByOutput[r.output.id] = r
         }
 
-        let fuel = reactionsByOutput[SpaceStoichiometry.fuel]!
-        var materials: [String: Int] = Dictionary(grouping: fuel.input, by: { $0.id }).mapValues { $0.reduce(0, { $0 + $1.quantity}) }
+        var materials: [String: Int] = [SpaceStoichiometry.fuel: fuel]
         var leftovers: [String: Int] = [:]
         var ores: Int = 0
 
@@ -79,4 +78,23 @@ class SpaceStoichiometry {
         return ores
     }
 
+    func solvePartTwo(reactions: [Reaction]) -> Int {
+        let targetOre = 1000000000000 // 1 trillion
+        let orePerOneFuel = 136771
+        var lowerBound = targetOre/orePerOneFuel
+        var upperBound = lowerBound * 2
+
+        // "brute force" b-search
+        while lowerBound < upperBound {
+            let mid = lowerBound + (upperBound - lowerBound) / 2
+            let ore = solvePartOne(reactions: reactions, fuel: mid)
+            if ore < targetOre {
+                lowerBound = mid
+            } else {
+                upperBound = mid - 1
+            }
+        }
+
+        return lowerBound
+    }
 }
