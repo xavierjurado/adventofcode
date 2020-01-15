@@ -9,10 +9,6 @@ class SpaceStoichiometry {
         let id: String
         let quantity: Int
 
-        func times(_ factor: Int) -> Chemical {
-            return Chemical(id: id, quantity: quantity * factor)
-        }
-
         var description: String {
             return "\(quantity) \(id)"
         }
@@ -23,59 +19,43 @@ class SpaceStoichiometry {
         let output: Chemical
     }
 
-    // this could be done also with a simple topological sort
     func solvePartOne(reactions: [Reaction], fuel: Int = 1) -> Int {
 
+        var noIncomingEdges: Set<String> = [SpaceStoichiometry.fuel]
+        var materials: [String: Int] = [SpaceStoichiometry.fuel: fuel]
         var reactionsByOutput: [String: Reaction] = [:]
+        var reactionsUsingChemical: [String: Int] = [:]
         for r in reactions {
             reactionsByOutput[r.output.id] = r
+            for i in r.input {
+                reactionsUsingChemical[i.id, default: 0] += 1
+            }
         }
 
-        var materials: [String: Int] = [SpaceStoichiometry.fuel: fuel]
-        var leftovers: [String: Int] = [:]
-        var ores: Int = 0
-
-        while !materials.isEmpty {
-            let wantedChemical = materials.first!
-            let wantedId = wantedChemical.key
-            var wantedQuantity = wantedChemical.value
-
-            defer {
-                materials.removeValue(forKey: wantedId)
+        while !noIncomingEdges.isEmpty {
+            let id = noIncomingEdges.removeFirst()
+            if id == SpaceStoichiometry.ore {
+                break
             }
+            let reaction = reactionsByOutput[id]!
+            let wantedQuantity = materials[id]!
 
-            if let leftover = leftovers[wantedId], leftover > 0 {
-                wantedQuantity -= leftover
-                wantedQuantity = max(0, wantedQuantity)
-                leftovers[wantedId] = leftover - (materials[wantedId]! - wantedQuantity)
-                if wantedQuantity == 0 {
-                    continue
+            let (q, r) = wantedQuantity.quotientAndRemainder(dividingBy: reaction.output.quantity)
+            let factor = q + (r > 0 ? 1 : 0)
+
+            for input in reaction.input {
+                // perform the reaction
+                materials[input.id, default: 0] += input.quantity * factor
+
+                // seek other chemicals to be processed
+                reactionsUsingChemical[input.id, default: 0] -= 1
+                if reactionsUsingChemical[input.id] == 0 {
+                    noIncomingEdges.insert(input.id)
                 }
             }
-
-            guard wantedId != SpaceStoichiometry.ore else {
-                ores += wantedQuantity
-                continue
-            }
-            let neededReaction = reactionsByOutput[wantedId]!
-
-            let neededReactionChemicals: [Chemical]
-            if neededReaction.output.quantity >= wantedQuantity {
-                neededReactionChemicals = neededReaction.input
-                leftovers[wantedId, default: 0] += neededReaction.output.quantity - wantedQuantity
-            } else {
-                let (q, r) = wantedQuantity.quotientAndRemainder(dividingBy: neededReaction.output.quantity)
-                let factor = q + (r > 0 ? 1 : 0)
-                neededReactionChemicals = neededReaction.input.map { $0.times(factor) }
-                leftovers[wantedId, default: 0] += neededReaction.output.quantity * factor - wantedQuantity
-            }
-
-            for c in neededReactionChemicals {
-                materials[c.id, default: 0] += c.quantity
-            }
         }
 
-        return ores
+        return materials[SpaceStoichiometry.ore]!
     }
 
     func solvePartTwo(reactions: [Reaction]) -> Int {
