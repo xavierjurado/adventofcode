@@ -80,20 +80,29 @@ class RepairDroidInterface: InputBuffer, OutputBuffer {
         return distTo[leakLocation]
     }
 
+    func maximumDistanceFromLeak() -> Int? {
+        let max = distTo.max { $0.value < $1.value }!
+        let path = computeOptimalPath(from: max.key)
+        printMap(path: path)
+        return max.value
+    }
+
     private var position: XY
     private var lastCommand : MovementCommand?
     private var commandQueue: [MovementCommand]
     private var map: [XY: Content]
-    private var pathTo: [XY: XY] = [:]
+    private var pathTo: [XY: XY]
     private var distTo: [XY: Int]
     private var leakLocation: XY?
+    private var findFurthestDistanceFromLeak: Bool
 
-
-    init() {
+    init(findFurthestDistanceFromLeak: Bool) {
+        self.findFurthestDistanceFromLeak = findFurthestDistanceFromLeak
         position = .zero
         commandQueue = MovementCommand.allCases
         map = [.zero: .empty]
         distTo = [.zero: 0]
+        pathTo = [:]
     }
 
     private func computeNextMovementCommand(for status: StatusCode) {
@@ -105,30 +114,41 @@ class RepairDroidInterface: InputBuffer, OutputBuffer {
         case .moved:
             let from = position
             position = position.move(lastCommand)
-            let backtracing = map[position] != nil
-            if !backtracing {
-                distTo[position] = distTo[from]! + 1
+            let backtrack = map[position] != nil
+            map[position] = .empty
+            let alt = distTo[from]! + 1
+            if alt < distTo[position, default: .max] {
+                distTo[position] = alt
                 pathTo[position] = from
-                map[position] = .empty
+            }
+            if !backtrack {
                 commandQueue = movementCommand(from: position) + [lastCommand.inverse()] + commandQueue
             }
         case .found:
             let from = position
             position = position.move(lastCommand)
-            leakLocation = position
-            distTo[position] = distTo[from]! + 1
-            pathTo[position] = from
             map[position] = .leak
+            let alt = distTo[from]! + 1
+            if alt < distTo[position, default: .max] {
+                distTo[position] = alt
+                pathTo[position] = from
+            }
             commandQueue = [lastCommand.inverse()] + commandQueue
+            leakLocation = position
+
+            if findFurthestDistanceFromLeak {
+                findFurthestDistanceFromLeak = false
+                restartFromLeak(position)
+            }
         }
     }
 
-    // return commands to go to places I've never been or places I'm more
+    // return commands to go to places I've never been or places I've found a better way to reach
     private func movementCommand(from p: XY) -> [MovementCommand] {
         let candidates: [MovementCommand] = MovementCommand.allCases
         return candidates.filter { command in
             let position = p.move(command)
-            return map[position] == nil
+            return map[position] != .wall && distTo[p]! + 1 < distTo[position, default: .max]
         }
     }
 
@@ -138,6 +158,13 @@ class RepairDroidInterface: InputBuffer, OutputBuffer {
             steps.append(from)
         }
         return steps
+    }
+
+    private func restartFromLeak(_ leak: XY) {
+        commandQueue = MovementCommand.allCases
+        map = [leak: .leak]
+        distTo = [leak: 0]
+        pathTo = [:]
     }
 
     private func printMap(path: [XY] = []) {
@@ -158,7 +185,13 @@ class RepairDroidInterface: InputBuffer, OutputBuffer {
 
         var normalizedOutput: [[Character]] = Array(repeating: Array(repeating: "?", count: dx), count:dy)
         for (xy, content) in map {
-            let character = path.contains(xy) ? "o" : content.rawValue
+            var character = path.contains(xy) ? "o" : content.rawValue
+            if xy == path.first {
+                character = "F"
+            }
+            if xy == path.last {
+                character = "T"
+            }
             normalizedOutput[xy.y - minY][xy.x - minX] = character
         }
 
@@ -171,10 +204,19 @@ class OxygenSystem {
 
     func solvePartOne(memory: [Int]) -> Int {
         let computer = Intcode(memory: memory)
-        let interface = RepairDroidInterface()
+        let interface = RepairDroidInterface(findFurthestDistanceFromLeak: false)
         computer.input = interface
         computer.output = interface
         try! computer.execute()
         return interface.optimalPathLength()!
+    }
+
+    func solvePartTwo(memory: [Int]) -> Int {
+        let computer = Intcode(memory: memory)
+        let interface = RepairDroidInterface(findFurthestDistanceFromLeak: true)
+        computer.input = interface
+        computer.output = interface
+        try! computer.execute()
+        return interface.maximumDistanceFromLeak()!
     }
 }
