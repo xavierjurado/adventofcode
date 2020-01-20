@@ -17,6 +17,9 @@
 		4723BE9C23CB71DF0087B8DB /* 13-care-package-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */; };
 		4723BE9E23CB725F0087B8DB /* 13.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4723BE9D23CB725F0087B8DB /* 13.txt */; };
 		474A59AD239D67F40039635C /* Intcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A59AC239D67F40039635C /* Intcode.swift */; };
+		474EAFE123D63CF500644A96 /* 16-fft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EAFE023D63CF500644A96 /* 16-fft.swift */; };
+		474EAFE323D6441600644A96 /* 16-fft-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EAFE223D6441600644A96 /* 16-fft-test.swift */; };
+		474EAFE523D64AF100644A96 /* 16.txt in Resources */ = {isa = PBXBuildFile; fileRef = 474EAFE423D64AF100644A96 /* 16.txt */; };
 		474ED3E123B8233100E056A8 /* 10-monitoring-station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474ED3E023B8233100E056A8 /* 10-monitoring-station.swift */; };
 		474ED3E323B82F3F00E056A8 /* 10-monitoring-station-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474ED3E223B82F3F00E056A8 /* 10-monitoring-station-test.swift */; };
 		474F10AE23CA70FA000987EC /* 12-n-body-problem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474F10AD23CA70FA000987EC /* 12-n-body-problem.swift */; };
@@ -73,6 +76,9 @@
 		4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "13-care-package-test.swift"; sourceTree = "<group>"; };
 		4723BE9D23CB725F0087B8DB /* 13.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13.txt; sourceTree = "<group>"; };
 		474A59AC239D67F40039635C /* Intcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intcode.swift; sourceTree = "<group>"; };
+		474EAFE023D63CF500644A96 /* 16-fft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "16-fft.swift"; sourceTree = "<group>"; };
+		474EAFE223D6441600644A96 /* 16-fft-test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "16-fft-test.swift"; sourceTree = "<group>"; };
+		474EAFE423D64AF100644A96 /* 16.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 16.txt; sourceTree = "<group>"; };
 		474ED3E023B8233100E056A8 /* 10-monitoring-station.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "10-monitoring-station.swift"; sourceTree = "<group>"; };
 		474ED3E223B82F3F00E056A8 /* 10-monitoring-station-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "10-monitoring-station-test.swift"; sourceTree = "<group>"; };
 		474F10AD23CA70FA000987EC /* 12-n-body-problem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "12-n-body-problem.swift"; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 				4723BE9923CB52A70087B8DB /* 13-care-package.swift */,
 				475A2C0523CD1DFF00A189F9 /* 14-space-stoichiometry.swift */,
 				4779A96523D235A300318D24 /* 15-oxygen-system.swift */,
+				474EAFE023D63CF500644A96 /* 16-fft.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -180,6 +187,7 @@
 				4723BE9B23CB71DF0087B8DB /* 13-care-package-test.swift */,
 				475A2C0723CD243E00A189F9 /* 14-space-stoichiometry-test.swift */,
 				4779A96723D243D500318D24 /* 15-oxygen-system-test.swift */,
+				474EAFE223D6441600644A96 /* 16-fft-test.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -201,6 +209,7 @@
 				4723BE9D23CB725F0087B8DB /* 13.txt */,
 				47222C4F23CE64CB00ACAB0C /* 14.txt */,
 				4779A96923D2443100318D24 /* 15.txt */,
+				474EAFE423D64AF100644A96 /* 16.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -316,6 +325,7 @@
 				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
 				4779A96A23D2443200318D24 /* 15.txt in Resources */,
 				474F208823B64E5B000A6CA9 /* 09.txt in Resources */,
+				474EAFE523D64AF100644A96 /* 16.txt in Resources */,
 				477B013D23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt in Resources */,
 				4764501323BEB3D50051B428 /* 10.txt in Resources */,
 				4750144A23A6EFFA00512E66 /* 07.txt in Resources */,
@@ -336,6 +346,7 @@
 				474F10AE23CA70FA000987EC /* 12-n-body-problem.swift in Sources */,
 				474F850823B16CC600360D8E /* 08-space-image.swift in Sources */,
 				4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */,
+				474EAFE123D63CF500644A96 /* 16-fft.swift in Sources */,
 				474F564623C52DFF0026DA59 /* 11-space-police.swift in Sources */,
 				4723BE9A23CB52A70087B8DB /* 13-care-package.swift in Sources */,
 				47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */,
@@ -350,6 +361,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */,
+				474EAFE323D6441600644A96 /* 16-fft-test.swift in Sources */,
 				4710A16A2397021F008C408B /* PuzzlesTests.swift in Sources */,
 				4779A96823D243D500318D24 /* 15-oxygen-system-test.swift in Sources */,
 				474ED3E323B82F3F00E056A8 /* 10-monitoring-station-test.swift in Sources */,
