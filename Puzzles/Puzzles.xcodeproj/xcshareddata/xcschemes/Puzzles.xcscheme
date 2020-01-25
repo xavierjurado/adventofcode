@@ -39,6 +39,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "FlawedFrequencyTransmissionTest/testPartOne()">
+               </Test>
+               <Test
                   Identifier = "PuzzlesTests/testSecureContainerSolution()">
                </Test>
             </SkippedTests>
