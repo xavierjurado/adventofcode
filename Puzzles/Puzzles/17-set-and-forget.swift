@@ -1,6 +1,6 @@
 import Foundation
 
-class ASCIInterface: OutputBuffer {
+class ASCIInterface: OutputBuffer, InputBuffer {
 
     struct XY: Hashable {
         var x: Int
@@ -11,17 +11,33 @@ class ASCIInterface: OutputBuffer {
         }
 
         var intersectionCoordinates: Set<XY> {
-            return [self, XY(x: x, y: y - 1), XY(x: x, y: y - 2), XY(x: x - 1, y: y - 1), XY(x: x + 1, y: y - 1)]
+            return [self, up, up.up, up.left, up.right]
+        }
+
+        var left: XY {
+            return XY(x: x - 1, y: y)
+        }
+
+        var right: XY {
+            return XY(x: x + 1, y: y)
+        }
+
+        var up: XY {
+            return XY(x: x, y: y - 1)
+        }
+
+        var down: XY {
+            return XY(x: x, y: y + 1)
         }
     }
 
-    private var position: XY
+    private var printPosition: XY
     private var scaffold: Set<XY>
     private var rawMap: String
     private(set) var intersections: Set<XY>
 
     init() {
-        position = .zero
+        printPosition = .zero
         scaffold = []
         rawMap = ""
         intersections = []
@@ -33,24 +49,31 @@ class ASCIInterface: OutputBuffer {
 
         switch c {
         case "#":
-            scaffold.insert(position)
-            if scaffold.isSuperset(of: position.intersectionCoordinates) {
-                let intersection = XY(x: position.x, y: position.y - 1)
-                intersections.insert(intersection)
+            scaffold.insert(printPosition)
+            if scaffold.isSuperset(of: printPosition.intersectionCoordinates) {
+                intersections.insert(printPosition.up)
             }
-            position.x += 1
+            printPosition = printPosition.right
         case "\n":
-            position = XY(x: 0, y: position.y + 1)
+            printPosition = XY(x: 0, y: printPosition.y + 1)
         default:
-            position.x += 1
+            printPosition = printPosition.right
             break
         }
-
     }
 
     func printMap() {
         print(rawMap)
     }
+
+    func read() -> Int {
+        return 0
+    }
+
+    func hasData() -> Bool {
+        return true
+    }
+
 }
 
 class SetAndForget {
@@ -61,8 +84,19 @@ class SetAndForget {
         computer.output = interface
         try! computer.execute()
         interface.printMap()
-        print(interface.intersections)
-
         return interface.intersections.reduce(0) { $0 + $1.x * $1.y }
+    }
+
+    func solvePartTwo(memory: [Int]) -> Int {
+        var memory = memory
+        memory[0] = 2
+
+        let computer = Intcode(memory: memory)
+        let interface = ASCIInterface()
+        computer.input = interface
+        computer.output = interface
+        try! computer.execute()
+
+        return 0
     }
 }
