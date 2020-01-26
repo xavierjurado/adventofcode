@@ -50,6 +50,9 @@
 		4779A96823D243D500318D24 /* 15-oxygen-system-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4779A96723D243D500318D24 /* 15-oxygen-system-test.swift */; };
 		4779A96A23D2443200318D24 /* 15.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4779A96923D2443100318D24 /* 15.txt */; };
 		477B013D23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt in Resources */ = {isa = PBXBuildFile; fileRef = 477B013C23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt */; };
+		47E2F56E23DE076400B12658 /* 17-set-and-forget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E2F56D23DE076400B12658 /* 17-set-and-forget.swift */; };
+		47E2F57023DE097800B12658 /* 17.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47E2F56F23DE097800B12658 /* 17.txt */; };
+		47E2F57223DE09E500B12658 /* 17-set-and-forget-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E2F57123DE09E500B12658 /* 17-set-and-forget-test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +112,9 @@
 		4779A96723D243D500318D24 /* 15-oxygen-system-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "15-oxygen-system-test.swift"; sourceTree = "<group>"; };
 		4779A96923D2443100318D24 /* 15.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 15.txt; sourceTree = "<group>"; };
 		477B013C23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "05-sunny-with-a-chance-of-asteroids.txt"; sourceTree = "<group>"; };
+		47E2F56D23DE076400B12658 /* 17-set-and-forget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "17-set-and-forget.swift"; sourceTree = "<group>"; };
+		47E2F56F23DE097800B12658 /* 17.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 17.txt; sourceTree = "<group>"; };
+		47E2F57123DE09E500B12658 /* 17-set-and-forget-test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "17-set-and-forget-test.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +173,7 @@
 				475A2C0523CD1DFF00A189F9 /* 14-space-stoichiometry.swift */,
 				4779A96523D235A300318D24 /* 15-oxygen-system.swift */,
 				474EAFE023D63CF500644A96 /* 16-fft.swift */,
+				47E2F56D23DE076400B12658 /* 17-set-and-forget.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -188,6 +195,7 @@
 				475A2C0723CD243E00A189F9 /* 14-space-stoichiometry-test.swift */,
 				4779A96723D243D500318D24 /* 15-oxygen-system-test.swift */,
 				474EAFE223D6441600644A96 /* 16-fft-test.swift */,
+				47E2F57123DE09E500B12658 /* 17-set-and-forget-test.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -210,6 +218,7 @@
 				47222C4F23CE64CB00ACAB0C /* 14.txt */,
 				4779A96923D2443100318D24 /* 15.txt */,
 				474EAFE423D64AF100644A96 /* 16.txt */,
+				47E2F56F23DE097800B12658 /* 17.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -321,6 +330,7 @@
 				4750144823A6C09C00512E66 /* 06.txt in Resources */,
 				4723BE9E23CB725F0087B8DB /* 13.txt in Resources */,
 				4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */,
+				47E2F57023DE097800B12658 /* 17.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
 				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
 				4779A96A23D2443200318D24 /* 15.txt in Resources */,
@@ -350,6 +360,7 @@
 				474F564623C52DFF0026DA59 /* 11-space-police.swift in Sources */,
 				4723BE9A23CB52A70087B8DB /* 13-care-package.swift in Sources */,
 				47757CD7239833C900C43809 /* 02-program-alarm.swift in Sources */,
+				47E2F56E23DE076400B12658 /* 17-set-and-forget.swift in Sources */,
 				4710A1762397026D008C408B /* 01-the-tirany-of-the-rocket-equation.swift in Sources */,
 				4779A96623D235A300318D24 /* 15-oxygen-system.swift in Sources */,
 				4750144623A6AC7A00512E66 /* 06-universal-orbit-map.swift in Sources */,
@@ -363,6 +374,7 @@
 				4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */,
 				474EAFE323D6441600644A96 /* 16-fft-test.swift in Sources */,
 				4710A16A2397021F008C408B /* PuzzlesTests.swift in Sources */,
+				47E2F57223DE09E500B12658 /* 17-set-and-forget-test.swift in Sources */,
 				4779A96823D243D500318D24 /* 15-oxygen-system-test.swift in Sources */,
 				474ED3E323B82F3F00E056A8 /* 10-monitoring-station-test.swift in Sources */,
 				474F10B023CA7A5C000987EC /* 12-n-body-problem-test.swift in Sources */,
