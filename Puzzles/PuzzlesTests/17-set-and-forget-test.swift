@@ -14,6 +14,6 @@ class SetAndForgetTest: XCTestCase {
         let scanner = SingleValueScanner<Int>(testCaseName: "17", separator: CharacterSet(charactersIn: ","))
         let program = scanner.parse()
         let sut = SetAndForget()
-        XCTAssertEqual(sut.solvePartTwo(memory: program), 5068)
+        XCTAssertEqual(sut.solvePartTwo(memory: program), 1415975)
     }
 }
