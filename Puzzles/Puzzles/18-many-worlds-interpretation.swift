@@ -44,7 +44,7 @@ class ManyWorldInterpretation {
         }
 
         let origin: XY
-        let allKeys: Set<Character>
+        let allKeys: [Character: XY]
 
         init(raw: String) {
             let rows = raw.split(separator: "\n")
@@ -72,7 +72,7 @@ class ManyWorldInterpretation {
                     return nil
                 }
             }
-            self.allKeys = Set(keys.keys)
+            self.allKeys = keys
             self.origin = origin!
         }
 
@@ -103,23 +103,25 @@ class ManyWorldInterpretation {
     func solvePartOne(maze: String) -> Int {
         // Parse maze
         let map = Map(raw: maze)
+        let adj = preprocessRoutes(from: map.origin, map: map)
 
         // Dijkstra
         struct Node: Hashable {
-            var position: XY
+            var key: Character
             var availableKeys: Set<Character>
         }
 
-        let origin = Node(position: map.origin, availableKeys: [])
+        let origin = Node(key: "@", availableKeys: [])
         var distTo: [Node: Int] = [origin: 0]
         var queue: [Node] = [origin]
 
         while !queue.isEmpty {
-            let v = queue.removeFirst() // TODO: mindist
-            let r = routes(from: v.position, keys: v.availableKeys, map: map)
-            for n in r {
-                let d = distTo[v]! + n.value
-                let node = Node(position: n.key.position, availableKeys: v.availableKeys.union([n.key.key]))
+            let v = queue.removeFirst()
+            let edges = adj[v.key]!
+            let r = edges.filter { $1.keys.isSubset(of: v.availableKeys) }
+            for (key, cost) in r {
+                let d = distTo[v]! + cost.value
+                let node = Node(key: key, availableKeys: v.availableKeys.union([key]))
                 if d < distTo[node, default: Int.max] {
                     distTo[node] = d
                     queue.append(node)
@@ -129,7 +131,7 @@ class ManyWorldInterpretation {
 
         return distTo
             .filter { d -> Bool in
-                    d.key.availableKeys == map.allKeys
+                d.key.availableKeys == Set(map.allKeys.keys)
             }
             .sorted { (d1, d2) -> Bool in
                 d1.value < d2.value
@@ -137,86 +139,50 @@ class ManyWorldInterpretation {
             .first!.value
     }
 
-    struct KeyPosition: Hashable {
-        var position: XY
-        var key: Character
+    struct Cost: Hashable {
+        var value: Int = 0
+        var keys: Set<Character> = []
     }
 
-    private func routes(from origin: XY, keys: Set<Character>, map: Map) -> [KeyPosition: Int] {
-        // BFS
-        var queue: [XY]  = [origin]
-        var discovered: Set<XY> = [origin]
-        var distTo: [XY: Int] = [origin: 0]
-        var routesToKeys: [KeyPosition: Int] = [:]
+    private func preprocessRoutes(from origin: XY, map: Map) -> [Character: [Character: Cost]] {
 
-        while !queue.isEmpty {
-            let v = queue.removeFirst()
-            for n in map.neightbours(v) {
-                guard !discovered.contains(n) else { continue }
-                discovered.insert(n)
-                distTo[n] = distTo[v]! + 1
+        var adj: [Character: [Character: Cost]] = [:]
 
-                switch map[n] {
-                case .wall:
-                    continue
-                case .door(let d):
-                    let haveTheKey = keys.contains(d.lowercased().first!)
-                    if haveTheKey {
+        var pointsOfInterest = map.allKeys
+        pointsOfInterest["@"] = origin
+
+        for (key, origin) in pointsOfInterest {
+            var queue: [XY]  = [origin]
+            var discovered: Set<XY> = [origin]
+            var distTo: [XY: Cost] = [origin: Cost()]
+
+            while !queue.isEmpty {
+                let v = queue.removeFirst()
+                for n in map.neightbours(v) {
+                    guard !discovered.contains(n) else { continue }
+                    discovered.insert(n)
+                    var nCost = distTo[v]!
+                    nCost.value += 1
+
+                    switch map[n] {
+                    case .wall:
+                        continue
+                    case .door(let d):
+                        let key  = d.lowercased().first!
+                        nCost.keys.insert(key)
+                        queue.append(n)
+                    case .key(let k):
+                        adj[key, default: [:]][k] = nCost
+                    case .empty:
                         queue.append(n)
                     }
-                case .key(let k):
-                    let haveTheKey = keys.contains(k)
-                    if !haveTheKey {
-                        routesToKeys[KeyPosition(position: n, key: k)] = distTo[n]!
-                    } else {
-                        queue.append(n)
-                    }
-                case .empty:
-                    queue.append(n)
+
+                    distTo[n] = nCost
                 }
             }
+
         }
 
-        return routesToKeys
+        return adj
     }
-
-//    private func foo(from origin: XY, map: Map) {
-//
-//        struct Cost {
-//            var value: Int = 0
-//            var keys: Set<Character> = []
-//        }
-//
-//        var queue: [XY]  = [origin]
-//        var discovered: Set<XY> = [origin]
-//        var distTo: [XY: Cost] = [origin: Cost()]
-//        var distToKey: [KeyPosition: Int] = [:]
-//
-//        while !queue.isEmpty {
-//            let v = queue.removeFirst()
-//            for n in map.neightbours(v) {
-//                guard !discovered.contains(n) else { continue }
-//                discovered.insert(n)
-//                distTo[n, default: Cost()].value = distTo[v]!.value + 1
-//
-//                switch map[n] {
-//                case .wall:
-//                    continue
-//                case .door(let d):
-//                    distTo[n]!.keys.insert(d)
-//                    queue.append(n)
-//                case .key(let k):
-//                    let haveTheKey = keys.contains(k)
-//                    if !haveTheKey {
-//                        routesToKeys[KeyPosition(position: n, key: k)] = distTo[n]!
-//                    } else {
-//                        queue.append(n)
-//                    }
-//                case .empty:
-//                    queue.append(n)
-//                }
-//            }
-//        }
-//
-//    }
 }
