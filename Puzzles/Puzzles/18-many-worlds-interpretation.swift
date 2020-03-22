@@ -43,8 +43,8 @@ class ManyWorldInterpretation {
             return matrix.count
         }
 
-        let origin: XY
-        let allKeys: [Character: XY]
+        private(set) var allKeys: [Character: XY]
+        private(set) var entrances: Set<XY>
 
         init(raw: String) {
             let rows = raw.split(separator: "\n")
@@ -73,11 +73,16 @@ class ManyWorldInterpretation {
                 }
             }
             self.allKeys = keys
-            self.origin = origin!
+            self.entrances = [origin!]
         }
 
         subscript(pos: XY) -> Content {
-            return matrix[pos.y][pos.x]
+            get {
+                return matrix[pos.y][pos.x]
+            }
+            set {
+                matrix[pos.y][pos.x] = newValue
+            }
         }
 
         func neightbours(_ position: XY) -> [XY] {
@@ -96,6 +101,17 @@ class ManyWorldInterpretation {
             }
             return n
         }
+
+        mutating func split() {
+            guard let entrance = entrances.first, entrances.count == 1 else { fatalError() }
+            self[entrance] = .wall
+            self[entrance.up] = .wall
+            self[entrance.down] = .wall
+            self[entrance.left] = .wall
+            self[entrance.right] = .wall
+
+            entrances = [entrance.up.left, entrance.up.right, entrance.down.left, entrance.down.right]
+        }
     }
 
     /// Pathways graph
@@ -103,7 +119,7 @@ class ManyWorldInterpretation {
     func solvePartOne(maze: String) -> Int {
         // Parse maze
         let map = Map(raw: maze)
-        let adj = preprocessRoutes(from: map.origin, map: map)
+        let adj = preprocessRoutes(map: map)
 
         // Dijkstra
         struct Node: Hashable {
@@ -144,45 +160,55 @@ class ManyWorldInterpretation {
         var keys: Set<Character> = []
     }
 
-    private func preprocessRoutes(from origin: XY, map: Map) -> [Character: [Character: Cost]] {
+    private func preprocessRoutes(map: Map) -> [Character: [Character: Cost]] {
 
         var adj: [Character: [Character: Cost]] = [:]
 
-        var pointsOfInterest = map.allKeys
-        pointsOfInterest["@"] = origin
+        for entrance in map.entrances {
+            var pointsOfInterest = map.allKeys
+            pointsOfInterest["@"] = entrance
 
-        for (key, origin) in pointsOfInterest {
-            var queue: [XY]  = [origin]
-            var discovered: Set<XY> = [origin]
-            var distTo: [XY: Cost] = [origin: Cost()]
+            for (key, origin) in pointsOfInterest {
+                var queue: [XY]  = [origin]
+                var discovered: Set<XY> = [origin]
+                var distTo: [XY: Cost] = [origin: Cost()]
 
-            while !queue.isEmpty {
-                let v = queue.removeFirst()
-                for n in map.neightbours(v) {
-                    guard !discovered.contains(n) else { continue }
-                    discovered.insert(n)
-                    var nCost = distTo[v]!
-                    nCost.value += 1
+                while !queue.isEmpty {
+                    let v = queue.removeFirst()
+                    for n in map.neightbours(v) {
+                        guard !discovered.contains(n) else { continue }
+                        discovered.insert(n)
+                        var nCost = distTo[v]!
+                        nCost.value += 1
 
-                    switch map[n] {
-                    case .wall:
-                        continue
-                    case .door(let d):
-                        let key  = d.lowercased().first!
-                        nCost.keys.insert(key)
-                        queue.append(n)
-                    case .key(let k):
-                        adj[key, default: [:]][k] = nCost
-                    case .empty:
-                        queue.append(n)
+                        switch map[n] {
+                        case .wall:
+                            continue
+                        case .door(let d):
+                            let key  = d.lowercased().first!
+                            nCost.keys.insert(key)
+                            queue.append(n)
+                        case .key(let k):
+                            adj[key, default: [:]][k] = nCost
+                        case .empty:
+                            queue.append(n)
+                        }
+
+                        distTo[n] = nCost
                     }
-
-                    distTo[n] = nCost
                 }
             }
-
         }
 
         return adj
+    }
+
+    func solvePartTwo(maze: String) -> Int {
+        // Parse maze
+        var map = Map(raw: maze)
+        map.split()
+        let adj = preprocessRoutes(map: map)
+
+        return 0
     }
 }
