@@ -127,7 +127,7 @@ class ManyWorldInterpretation {
             var availableKeys: Set<Character>
         }
 
-        let origin = Node(key: "@", availableKeys: [])
+        let origin = Node(key: "1", availableKeys: [])
         var distTo: [Node: Int] = [origin: 0]
         var queue: [Node] = [origin]
 
@@ -163,10 +163,11 @@ class ManyWorldInterpretation {
     private func preprocessRoutes(map: Map) -> [Character: [Character: Cost]] {
 
         var adj: [Character: [Character: Cost]] = [:]
+        let entranceKeys: [Character] = ["1", "2", "3", "4"]
 
-        for entrance in map.entrances {
+        for (entrance, entranceKey) in zip(map.entrances, entranceKeys) {
             var pointsOfInterest = map.allKeys
-            pointsOfInterest["@"] = entrance
+            pointsOfInterest[entranceKey] = entrance
 
             for (key, origin) in pointsOfInterest {
                 var queue: [XY]  = [origin]
@@ -209,6 +210,40 @@ class ManyWorldInterpretation {
         map.split()
         let adj = preprocessRoutes(map: map)
 
-        return 0
+        // Dijkstra
+        struct Node: Hashable {
+            var droneLocations: [Character]
+            var availableKeys: Set<Character>
+        }
+
+        let origin = Node(droneLocations: ["1", "2", "3", "4"] , availableKeys: [])
+        var distTo: [Node: Int] = [origin: 0]
+        var queue: [Node] = [origin]
+
+        while !queue.isEmpty {
+            let v = queue.removeFirst()
+            for (i, drone) in v.droneLocations.enumerated() {
+                guard let r = adj[drone]?.filter ({ $1.keys.isSubset(of: v.availableKeys) }) else { continue }
+                for (key, cost) in r {
+                    let d = distTo[v]! + cost.value
+                    var droneLocations = v.droneLocations
+                    droneLocations[i] = key
+                    let node = Node(droneLocations: droneLocations, availableKeys: v.availableKeys.union([key]))
+                    if d < distTo[node, default: Int.max] {
+                        distTo[node] = d
+                        queue.append(node)
+                    }
+                }
+            }
+        }
+
+        return distTo
+            .filter { d -> Bool in
+                d.key.availableKeys == Set(map.allKeys.keys)
+            }
+            .sorted { (d1, d2) -> Bool in
+                d1.value < d2.value
+            }
+            .first!.value
     }
 }

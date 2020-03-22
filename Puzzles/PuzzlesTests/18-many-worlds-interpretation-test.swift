@@ -70,4 +70,62 @@ class ManyWorldInterpretationTest: XCTestCase {
         let sut = ManyWorldInterpretation()
         XCTAssertEqual(sut.solvePartOne(maze: maze), 3962)
     }
+
+    func testSample5() {
+        let maze = """
+        #######
+        #a.#Cd#
+        ##...##
+        ##.@.##
+        ##...##
+        #cB#Ab#
+        #######
+        """
+
+        let sut = ManyWorldInterpretation()
+        XCTAssertEqual(sut.solvePartTwo(maze: maze), 8)
+    }
+
+    func testSample6() {
+        let maze = """
+        ###############
+        #d.ABC.#.....a#
+        ######...######
+        ######.@.######
+        ######...######
+        #b.....#.....c#
+        ###############
+        """
+
+        let sut = ManyWorldInterpretation()
+        XCTAssertEqual(sut.solvePartTwo(maze: maze), 24)
+    }
+
+    func testSample7() {
+        let maze = """
+        #############
+        #g#f.D#..h#l#
+        #F###e#E###.#
+        #dCba...BcIJ#
+        #####.@.#####
+        #nK.L...G...#
+        #M###N#H###.#
+        #o#m..#i#jk.#
+        #############
+        """
+
+        let sut = ManyWorldInterpretation()
+        XCTAssertEqual(sut.solvePartTwo(maze: maze), 72)
+    }
+
+    func testPartTwo() {
+        guard let inputFile = Bundle.current.url(forResource: "18", withExtension: "txt"),
+            let inputData = try? Data(contentsOf: inputFile),
+            let maze = String(data: inputData, encoding: .utf8) else {
+            fatalError("Could not read test case")
+        }
+
+        let sut = ManyWorldInterpretation()
+        XCTAssertEqual(sut.solvePartTwo(maze: maze), 1844)
+    }
 }
