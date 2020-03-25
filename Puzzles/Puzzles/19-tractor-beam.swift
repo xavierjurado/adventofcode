@@ -1,17 +1,10 @@
 import Foundation
 
 class TractorBeamInterface: InputBuffer, OutputBuffer {
-
-    let area: Int
-    var affectedPoints = 0
+    var affected = false
     var x = 0
     var y = 0
-    var i = 0
-    var finished = false
-
-    init(area: Int) {
-        self.area = area
-    }
+    private var i = 0
 
     func read() -> Int {
         defer { i += 1 }
@@ -23,39 +16,33 @@ class TractorBeamInterface: InputBuffer, OutputBuffer {
     }
 
     func hasData() -> Bool {
-        !finished
+        return true
     }
 
     func write(value: Int) {
-        if value == 1 {
-            affectedPoints += 1
-        }
-        computeNextState()
-    }
-
-    private func computeNextState() {
-        guard x < area - 1 || y < area - 1 else {
-            finished = true
-            return
-        }
-
-        if x < area - 1 {
-            x += 1
-        } else {
-            x = 0
-            y += 1
-        }
+        affected = value == 1
     }
 }
 
 class TractorBeam {
 
     func solvePartOne(memory: [Int]) throws -> Int {
-        let computer = Intcode(memory: memory)
-        let interface = TractorBeamInterface(area: 50)
-        computer.input = interface
-        computer.output = interface
-        try computer.execute()
-        return interface.affectedPoints
+        var affectedPoints = 0
+        let area = 50
+        for y in 0..<area {
+            for x in 0..<area {
+                let computer = Intcode(memory: memory)
+                let interface = TractorBeamInterface()
+                computer.input = interface
+                computer.output = interface
+                interface.x = x
+                interface.y = y
+                try computer.execute()
+                if interface.affected {
+                    affectedPoints += 1
+                }
+            }
+        }
+        return affectedPoints
     }
 }
