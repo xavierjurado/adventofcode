@@ -18,6 +18,8 @@
 		4723BE9E23CB725F0087B8DB /* 13.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4723BE9D23CB725F0087B8DB /* 13.txt */; };
 		47485CAE242CC8AE006C7370 /* 20-donut-maze.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47485CAD242CC8AE006C7370 /* 20-donut-maze.swift */; };
 		47485CB0242CC8BB006C7370 /* 19-tractor-beam-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47485CAF242CC8BB006C7370 /* 19-tractor-beam-test.swift */; };
+		47485CB2242CCCB4006C7370 /* 20.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47485CB1242CCCB4006C7370 /* 20.txt */; };
+		47485CB4242D2283006C7370 /* 20-sample1.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47485CB3242D219D006C7370 /* 20-sample1.txt */; };
 		4749D41524241D360041D247 /* 18.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4749D41424241D360041D247 /* 18.txt */; };
 		474A59AD239D67F40039635C /* Intcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474A59AC239D67F40039635C /* Intcode.swift */; };
 		474EAFE123D63CF500644A96 /* 16-fft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474EAFE023D63CF500644A96 /* 16-fft.swift */; };
@@ -88,6 +90,8 @@
 		4723BE9D23CB725F0087B8DB /* 13.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 13.txt; sourceTree = "<group>"; };
 		47485CAD242CC8AE006C7370 /* 20-donut-maze.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "20-donut-maze.swift"; sourceTree = "<group>"; };
 		47485CAF242CC8BB006C7370 /* 19-tractor-beam-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "19-tractor-beam-test.swift"; sourceTree = "<group>"; };
+		47485CB1242CCCB4006C7370 /* 20.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 20.txt; sourceTree = "<group>"; };
+		47485CB3242D219D006C7370 /* 20-sample1.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "20-sample1.txt"; sourceTree = "<group>"; };
 		4749D41424241D360041D247 /* 18.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 18.txt; sourceTree = "<group>"; };
 		474A59AC239D67F40039635C /* Intcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Intcode.swift; sourceTree = "<group>"; };
 		474EAFE023D63CF500644A96 /* 16-fft.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "16-fft.swift"; sourceTree = "<group>"; };
@@ -243,6 +247,8 @@
 				47E2F56F23DE097800B12658 /* 17.txt */,
 				4749D41424241D360041D247 /* 18.txt */,
 				47BE8834242BC8D400ECD460 /* 19.txt */,
+				47485CB3242D219D006C7370 /* 20-sample1.txt */,
+				47485CB1242CCCB4006C7370 /* 20.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -357,9 +363,11 @@
 				47E2F57023DE097800B12658 /* 17.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
 				4759EDC7239C631A006406ED /* 03-crossed-wires.txt in Resources */,
+				47485CB4242D2283006C7370 /* 20-sample1.txt in Resources */,
 				4779A96A23D2443200318D24 /* 15.txt in Resources */,
 				4749D41524241D360041D247 /* 18.txt in Resources */,
 				474F208823B64E5B000A6CA9 /* 09.txt in Resources */,
+				47485CB2242CCCB4006C7370 /* 20.txt in Resources */,
 				474EAFE523D64AF100644A96 /* 16.txt in Resources */,
 				477B013D23A2C03F001061EF /* 05-sunny-with-a-chance-of-asteroids.txt in Resources */,
 				4764501323BEB3D50051B428 /* 10.txt in Resources */,
