@@ -42,6 +42,7 @@
 		4750144623A6AC7A00512E66 /* 06-universal-orbit-map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4750144523A6AC7A00512E66 /* 06-universal-orbit-map.swift */; };
 		4750144823A6C09C00512E66 /* 06.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4750144723A6C09C00512E66 /* 06.txt */; };
 		4750144A23A6EFFA00512E66 /* 07.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4750144923A6EFFA00512E66 /* 07.txt */; };
+		47513A8E242E052F001DCBF0 /* 20-sample2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47513A8D242E052F001DCBF0 /* 20-sample2.txt */; };
 		4757CAE92410494C00A29565 /* 18-many-worlds-interpretation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4757CAE82410494C00A29565 /* 18-many-worlds-interpretation.swift */; };
 		4757CAEB24104EC700A29565 /* 20-donut-maze-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */; };
 		4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC2239C1990006406ED /* 03-crossed-wires.swift */; };
@@ -114,6 +115,7 @@
 		4750144523A6AC7A00512E66 /* 06-universal-orbit-map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "06-universal-orbit-map.swift"; sourceTree = "<group>"; };
 		4750144723A6C09C00512E66 /* 06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 06.txt; sourceTree = "<group>"; };
 		4750144923A6EFFA00512E66 /* 07.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07.txt; sourceTree = "<group>"; };
+		47513A8D242E052F001DCBF0 /* 20-sample2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "20-sample2.txt"; sourceTree = "<group>"; };
 		4757CAE82410494C00A29565 /* 18-many-worlds-interpretation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "18-many-worlds-interpretation.swift"; sourceTree = "<group>"; };
 		4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "20-donut-maze-test.swift"; sourceTree = "<group>"; };
 		4759EDC2239C1990006406ED /* 03-crossed-wires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-crossed-wires.swift"; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				4749D41424241D360041D247 /* 18.txt */,
 				47BE8834242BC8D400ECD460 /* 19.txt */,
 				47485CB3242D219D006C7370 /* 20-sample1.txt */,
+				47513A8D242E052F001DCBF0 /* 20-sample2.txt */,
 				47485CB1242CCCB4006C7370 /* 20.txt */,
 			);
 			path = Resources;
@@ -355,6 +358,7 @@
 			files = (
 				474F564423C52DD50026DA59 /* 11.txt in Resources */,
 				474F10B223CA7AC4000987EC /* 12.txt in Resources */,
+				47513A8E242E052F001DCBF0 /* 20-sample2.txt in Resources */,
 				47222C5023CE64CB00ACAB0C /* 14.txt in Resources */,
 				474F850C23B1702300360D8E /* 08.txt in Resources */,
 				4750144823A6C09C00512E66 /* 06.txt in Resources */,
