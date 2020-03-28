@@ -43,6 +43,9 @@
 		4750144823A6C09C00512E66 /* 06.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4750144723A6C09C00512E66 /* 06.txt */; };
 		4750144A23A6EFFA00512E66 /* 07.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4750144923A6EFFA00512E66 /* 07.txt */; };
 		47513A8E242E052F001DCBF0 /* 20-sample2.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47513A8D242E052F001DCBF0 /* 20-sample2.txt */; };
+		47513A90242E36B5001DCBF0 /* 21-springdroid-adventure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47513A8F242E36B5001DCBF0 /* 21-springdroid-adventure.swift */; };
+		47513A92242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47513A91242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift */; };
+		47513A94242E46E1001DCBF0 /* 21.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47513A93242E46E1001DCBF0 /* 21.txt */; };
 		4757CAE92410494C00A29565 /* 18-many-worlds-interpretation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4757CAE82410494C00A29565 /* 18-many-worlds-interpretation.swift */; };
 		4757CAEB24104EC700A29565 /* 20-donut-maze-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */; };
 		4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4759EDC2239C1990006406ED /* 03-crossed-wires.swift */; };
@@ -116,6 +119,9 @@
 		4750144723A6C09C00512E66 /* 06.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 06.txt; sourceTree = "<group>"; };
 		4750144923A6EFFA00512E66 /* 07.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 07.txt; sourceTree = "<group>"; };
 		47513A8D242E052F001DCBF0 /* 20-sample2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "20-sample2.txt"; sourceTree = "<group>"; };
+		47513A8F242E36B5001DCBF0 /* 21-springdroid-adventure.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "21-springdroid-adventure.swift"; sourceTree = "<group>"; };
+		47513A91242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "21-springdroid-adventure-test.swift"; sourceTree = "<group>"; };
+		47513A93242E46E1001DCBF0 /* 21.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 21.txt; sourceTree = "<group>"; };
 		4757CAE82410494C00A29565 /* 18-many-worlds-interpretation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "18-many-worlds-interpretation.swift"; sourceTree = "<group>"; };
 		4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "20-donut-maze-test.swift"; sourceTree = "<group>"; };
 		4759EDC2239C1990006406ED /* 03-crossed-wires.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "03-crossed-wires.swift"; sourceTree = "<group>"; };
@@ -199,6 +205,7 @@
 				4757CAE82410494C00A29565 /* 18-many-worlds-interpretation.swift */,
 				47BE8830242BB84D00ECD460 /* 19-tractor-beam.swift */,
 				47485CAD242CC8AE006C7370 /* 20-donut-maze.swift */,
+				47513A8F242E36B5001DCBF0 /* 21-springdroid-adventure.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -224,6 +231,7 @@
 				47BE8832242BB86B00ECD460 /* 18-many-worlds-interpretation-test.swift */,
 				47485CAF242CC8BB006C7370 /* 19-tractor-beam-test.swift */,
 				4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */,
+				47513A91242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -252,6 +260,7 @@
 				47485CB3242D219D006C7370 /* 20-sample1.txt */,
 				47513A8D242E052F001DCBF0 /* 20-sample2.txt */,
 				47485CB1242CCCB4006C7370 /* 20.txt */,
+				47513A93242E46E1001DCBF0 /* 21.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -357,6 +366,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				474F564423C52DD50026DA59 /* 11.txt in Resources */,
+				47513A94242E46E1001DCBF0 /* 21.txt in Resources */,
 				474F10B223CA7AC4000987EC /* 12.txt in Resources */,
 				47513A8E242E052F001DCBF0 /* 20-sample2.txt in Resources */,
 				47222C5023CE64CB00ACAB0C /* 14.txt in Resources */,
@@ -394,6 +404,7 @@
 				4759EDC9239C7B9D006406ED /* 04-secure-container.swift in Sources */,
 				47485CAE242CC8AE006C7370 /* 20-donut-maze.swift in Sources */,
 				474F10AE23CA70FA000987EC /* 12-n-body-problem.swift in Sources */,
+				47513A90242E36B5001DCBF0 /* 21-springdroid-adventure.swift in Sources */,
 				474F850823B16CC600360D8E /* 08-space-image.swift in Sources */,
 				4757CAE92410494C00A29565 /* 18-many-worlds-interpretation.swift in Sources */,
 				4759EDC3239C1990006406ED /* 03-crossed-wires.swift in Sources */,
@@ -421,6 +432,7 @@
 				474ED3E323B82F3F00E056A8 /* 10-monitoring-station-test.swift in Sources */,
 				474F10B023CA7A5C000987EC /* 12-n-body-problem-test.swift in Sources */,
 				4723BE9C23CB71DF0087B8DB /* 13-care-package-test.swift in Sources */,
+				47513A92242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift in Sources */,
 				4757CAEB24104EC700A29565 /* 20-donut-maze-test.swift in Sources */,
 				47485CB0242CC8BB006C7370 /* 19-tractor-beam-test.swift in Sources */,
 				475A2C0823CD243E00A189F9 /* 14-space-stoichiometry-test.swift in Sources */,
