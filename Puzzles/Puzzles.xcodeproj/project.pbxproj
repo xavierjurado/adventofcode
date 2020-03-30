@@ -64,6 +64,9 @@
 		47BE8831242BB84D00ECD460 /* 19-tractor-beam.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE8830242BB84D00ECD460 /* 19-tractor-beam.swift */; };
 		47BE8833242BB86B00ECD460 /* 18-many-worlds-interpretation-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BE8832242BB86B00ECD460 /* 18-many-worlds-interpretation-test.swift */; };
 		47BE8835242BC8D400ECD460 /* 19.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47BE8834242BC8D400ECD460 /* 19.txt */; };
+		47D6772A24324CC9001274B1 /* 22-slam-shuffle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6772924324CC9001274B1 /* 22-slam-shuffle.swift */; };
+		47D6772C24324CD9001274B1 /* 22-slam-shuffle-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D6772B24324CD9001274B1 /* 22-slam-shuffle-test.swift */; };
+		47D6772E24325457001274B1 /* 22.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47D6772D24325457001274B1 /* 22.txt */; };
 		47E2F56E23DE076400B12658 /* 17-set-and-forget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E2F56D23DE076400B12658 /* 17-set-and-forget.swift */; };
 		47E2F57023DE097800B12658 /* 17.txt in Resources */ = {isa = PBXBuildFile; fileRef = 47E2F56F23DE097800B12658 /* 17.txt */; };
 		47E2F57223DE09E500B12658 /* 17-set-and-forget-test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47E2F57123DE09E500B12658 /* 17-set-and-forget-test.swift */; };
@@ -140,6 +143,9 @@
 		47BE8830242BB84D00ECD460 /* 19-tractor-beam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "19-tractor-beam.swift"; sourceTree = "<group>"; };
 		47BE8832242BB86B00ECD460 /* 18-many-worlds-interpretation-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "18-many-worlds-interpretation-test.swift"; sourceTree = "<group>"; };
 		47BE8834242BC8D400ECD460 /* 19.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 19.txt; sourceTree = "<group>"; };
+		47D6772924324CC9001274B1 /* 22-slam-shuffle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "22-slam-shuffle.swift"; sourceTree = "<group>"; };
+		47D6772B24324CD9001274B1 /* 22-slam-shuffle-test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "22-slam-shuffle-test.swift"; sourceTree = "<group>"; };
+		47D6772D24325457001274B1 /* 22.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 22.txt; sourceTree = "<group>"; };
 		47E2F56D23DE076400B12658 /* 17-set-and-forget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "17-set-and-forget.swift"; sourceTree = "<group>"; };
 		47E2F56F23DE097800B12658 /* 17.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = 17.txt; sourceTree = "<group>"; };
 		47E2F57123DE09E500B12658 /* 17-set-and-forget-test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "17-set-and-forget-test.swift"; sourceTree = "<group>"; };
@@ -206,6 +212,7 @@
 				47BE8830242BB84D00ECD460 /* 19-tractor-beam.swift */,
 				47485CAD242CC8AE006C7370 /* 20-donut-maze.swift */,
 				47513A8F242E36B5001DCBF0 /* 21-springdroid-adventure.swift */,
+				47D6772924324CC9001274B1 /* 22-slam-shuffle.swift */,
 			);
 			path = Puzzles;
 			sourceTree = "<group>";
@@ -232,6 +239,7 @@
 				47485CAF242CC8BB006C7370 /* 19-tractor-beam-test.swift */,
 				4757CAEA24104EC700A29565 /* 20-donut-maze-test.swift */,
 				47513A91242E36BC001DCBF0 /* 21-springdroid-adventure-test.swift */,
+				47D6772B24324CD9001274B1 /* 22-slam-shuffle-test.swift */,
 			);
 			path = PuzzlesTests;
 			sourceTree = "<group>";
@@ -261,6 +269,7 @@
 				47513A8D242E052F001DCBF0 /* 20-sample2.txt */,
 				47485CB1242CCCB4006C7370 /* 20.txt */,
 				47513A93242E46E1001DCBF0 /* 21.txt */,
+				47D6772D24325457001274B1 /* 22.txt */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -373,6 +382,7 @@
 				474F850C23B1702300360D8E /* 08.txt in Resources */,
 				4750144823A6C09C00512E66 /* 06.txt in Resources */,
 				4723BE9E23CB725F0087B8DB /* 13.txt in Resources */,
+				47D6772E24325457001274B1 /* 22.txt in Resources */,
 				4710A178239715B9008C408B /* 01-the-tirany-of-the-rocket-equation.txt in Resources */,
 				47E2F57023DE097800B12658 /* 17.txt in Resources */,
 				47757CD92398392A00C43809 /* 02-program-alarm.txt in Resources */,
@@ -397,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D6772A24324CC9001274B1 /* 22-slam-shuffle.swift in Sources */,
 				474A59AD239D67F40039635C /* Intcode.swift in Sources */,
 				47BE8831242BB84D00ECD460 /* 19-tractor-beam.swift in Sources */,
 				475A2C0623CD1DFF00A189F9 /* 14-space-stoichiometry.swift in Sources */,
@@ -424,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4759EDC5239C24B1006406ED /* SingleValueScanner.swift in Sources */,
+				47D6772C24324CD9001274B1 /* 22-slam-shuffle-test.swift in Sources */,
 				474EAFE323D6441600644A96 /* 16-fft-test.swift in Sources */,
 				4710A16A2397021F008C408B /* PuzzlesTests.swift in Sources */,
 				47BE8833242BB86B00ECD460 /* 18-many-worlds-interpretation-test.swift in Sources */,
