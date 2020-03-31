@@ -1,5 +1,64 @@
 import Foundation
 
+extension BinaryInteger {
+  @inlinable
+  public func modInv(_ mod: Self) -> Self {
+    var (m, n) = (mod, self)
+    var (x, y) = (Self(0), Self(1))
+
+    while n != 0 {
+      (x, y) = (y, x - (m / n) * y)
+      (m, n) = (n, m % n)
+    }
+
+    while x < 0 {
+      x += mod
+    }
+
+    return x
+  }
+}
+
+func modPow<T: BinaryInteger>(_ n: T, _ e: T, _ m: T) -> T {
+  guard e != 0 else {
+    return 1
+  }
+
+  var res = T(1)
+  var base = n % m
+  var exp = e
+
+  while true {
+    if exp & 1 == 1 {
+        res = mulmod(res, base, m)
+    }
+
+    if exp == 1 {
+      return res
+    }
+
+    exp /= 2
+    base = mulmod(base, base, m)
+  }
+}
+
+func mulmod<T: BinaryInteger>(_ n: T, _ e: T, _ m: T) -> T {
+    var res = T(0)
+    var a = n % m
+    var b = e
+    while b > 0 {
+        if b & 1 == 1 {
+            res = res + a
+            res = res % m
+        }
+        a = a * 2
+        a = a % m
+
+        b = b / 2
+    }
+    return res
+}
+
 class SlamShuffle {
 
     enum Command {
@@ -15,6 +74,17 @@ class SlamShuffle {
                 return cutCards(input: deck, n: n)
             case .dealWithIncrement(let n):
                 return dealWithIncrement(input: deck, n: n)
+            }
+        }
+
+        func inputIndex(deckSize: Int, outputIndex: Int) -> Int {
+            switch self {
+            case .dealIntoNewStack:
+                return deckSize - 1 - outputIndex
+            case .cutCards(let n):
+                return (outputIndex + n + deckSize) % deckSize
+            case .dealWithIncrement(let n):
+                return (outputIndex * n.modInv(deckSize)) % deckSize
             }
         }
 
@@ -64,5 +134,15 @@ class SlamShuffle {
         }
 
         return deck.firstIndex(of: 2019)!
+    }
+
+    func solvePartTwo(input: [Command]) -> Int {
+//        let outputIndex = 2020
+//        let deckSize = 119_315_717_514_047
+//        let shuffle =  101_741_582_076_661
+
+        // TODO: compute affine input transformation (offset_diff, increment_mul)
+        // TODO: geometric series
+        return 0
     }
 }
